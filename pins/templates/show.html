@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="pinContainer">
+        <a href="{{ pin.image_url }}" target="_blank">
+            <img src="/media/{{ pin.image_file }}" alt="">
+        </a>
+        <p>Saved from <a href="{{ pin.image_url }}">{{ netloc }}</a></p> 
+        <form action="{{ pin.image_url }}" target="_blank">
+            <input type="submit" value="Visit">
+        </form>
+        <p>{{ pin.board.user_profile.user.username }} saved to {{ pin.board }}</p> 
+        <p>{{ pin.description }}</p>  
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="pins">
+        {% for pin in pins %}
+            <div class="pin">
+                <a class="pinLink" href="/pin/{{ pin.id }}">
+                    <img src="/media/{{ pin.image_file }}" alt="">
+                </a> 
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
