@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'pins/base.html' %}
 
 {% block content %}
     <div class="pinContainer">
@@ -9,7 +9,10 @@
         <form action="{{ pin.image_url }}" target="_blank">
             <input type="submit" value="Visit">
         </form>
-        <p>{{ pin.board.user_profile.user.username }} saved to {{ pin.board }}</p> 
+        <p>
+            {{ pin.board.user_profile.user.username }} saved to
+            <a href="/{{ pin.board.user_profile.user.username }}/{{ pin.board.name }}"> {{ pin.board }}</a>
+        </p> 
         <p>{{ pin.description }}</p>  
     </div>
 {% endblock %}

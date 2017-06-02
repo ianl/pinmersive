@@ -10,3 +10,6 @@ class Pin(models.Model):
     image_file = models.ImageField(upload_to='pin_images/')
 
     board = models.ForeignKey("boards.Board", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)

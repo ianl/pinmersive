@@ -12,5 +12,8 @@ class Board(models.Model):
     class Meta:
         unique_together = ("user_profile", "name")
 
+    def clean(self):
+        self.name = self.name.lower()
+
     def __str__(self):
         return self.name

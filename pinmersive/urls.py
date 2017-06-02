@@ -23,6 +23,7 @@ from pins import views as pins_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pin/', include('pins.urls', namespace="pins")),
+    url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
 
     url(r'^$', pins_views.index, name='home'),
 ]
