@@ -1,4 +1,4 @@
-{% extends 'pins/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="pinContainer">
@@ -11,7 +11,7 @@
         </form>
         <p>
             {{ pin.board.user_profile.user.username }} saved to
-            <a href="/{{ pin.board.user_profile.user.username }}/{{ pin.board.name }}"> {{ pin.board }}</a>
+            <a href="{% url 'users:board' pin.board.user_profile.user.username pin.board.name %}"> {{ pin.board }}</a>
         </p> 
         <p>{{ pin.description }}</p>  
     </div>

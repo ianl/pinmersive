@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from .models import Pin
+from categories.models import Category
 
 from urllib.parse import urlparse
 
