@@ -1,0 +1,56 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pinmersive</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/pinterest-logo.png' %}" alt="" height="50" width="50">
+            </a>
+        </div>
+
+        <div class="categoriesMenu">
+            <form action="{% url 'categories:categories' %}">
+                <input type="submit" value="Categories">
+            </form>
+        </div>
+    </div>
+    
+    <div class="userProfilePage">
+        <div class="userProfileHeader">
+            {% if user != user_profile.user %}
+                <form action="">
+                    <input type="submit" value="Follow">
+                </form>
+            {% endif %}
+
+            <h1>{{ user_profile.user.get_full_name }}</h1>
+            <p><b></b> Followers</p>
+            <p><b></b> Following</p>
+            <div class="userProfileAvatar">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                {% endif %}
+            </div>
+
+            <form action="{% url 'users:boards' user_profile.user.username %}">
+                <input type="submit" value="Boards">
+            </form>
+            <form action="{% url 'users:pins' user_profile.user.username %}">
+                <input type="submit" value="Pins">
+            </form>  
+        </div>
+        <div class="userProfileContent">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

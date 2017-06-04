@@ -16,4 +16,4 @@ class Board(models.Model):
         self.name = self.name.lower()
 
     def __str__(self):
-        return self.name
+        return str(self.user_profile.user.username) + "'s " + str(self.name)

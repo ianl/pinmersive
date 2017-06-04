@@ -1,0 +1,20 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="userProfilePins">
+        {% blocktrans count counter=user_pins|length %}
+            <p><b>{{ counter }}</b> Pin</p>
+        {% plural %}
+            <p><b>{{ counter }}</b> Pins</p>
+        {% endblocktrans %}
+
+        {% for pin in user_pins %}
+            <div class="pin">
+                <a class="pinLink" href="{% url 'pins:pin' pin.id %}">
+                    <img src="/media/{{ pin.image_file }}" alt="">
+                </a> 
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

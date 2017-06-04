@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="boardWrapper">
+        {% if user != user_profile.user %}
+            <form action="">
+                <input type="submit" value="Follow board">
+            </form>
+        {% endif %}
+
+        <h1>{{ board.name }}</h1>
+
+        {% blocktrans count counter=board.pin_set.count %}
+            <p><b>{{ counter }}</b> Pin</p>
+        {% plural %}
+            <p><b>{{ counter }}</b> Pins</p>
+        {% endblocktrans %}
+
+        <p><b></b> Followers</p>
+        <div class="userProfileAvatar">
+            <a href="{% url 'users:user' user_profile.user.username %}">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="" height="60" width="60">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="60" width="60">
+                {% endif %}
+            </a>
+        </div>
+
+        <p>{{ board.description }}</p>
+
+        <div class="pins">
+            {% for pin in board.pin_set.all %}
+                <div class="pin">
+                    <a class="pinLink" href="{% url 'pins:pin' pin.id %}">
+                        <img src="/media/{{ pin.image_file }}" alt="">
+                    </a> 
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

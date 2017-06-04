@@ -1,0 +1,32 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <div class="userProfileBoards">
+        {% for board in user_boards %}
+            <div class="board">
+                <a href="{% url 'users:board' user_profile.user.username board.name %}">
+                    {% for pin in board.pin_set.all %}
+                        <div class="pin">
+                            <img src="/media/{{ pin.image_file }}" alt="">
+                        </div>
+                    {% endfor %}
+                    
+                    <h2>{{ board.name }}</h2>
+
+                    {% blocktrans count counter=board.pin_set.count %}
+                        <p><b>{{ counter }}</b> Pin</p>
+                    {% plural %}
+                        <p><b>{{ counter }}</b> Pins</p>
+                    {% endblocktrans %}
+                </a>
+                
+                {% if user != user_profile.user %}
+                    <form action="">
+                        <input type="submit" value="Follow">
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
