@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'relationships.apps.RelationshipsConfig',
     'categories.apps.CategoriesConfig',
     'boards.apps.BoardsConfig',
     'pins.apps.PinsConfig',

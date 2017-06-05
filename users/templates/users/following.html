@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="followingPage">
+        <div class="followingHeader">
+            <div class="userProfileAvatar">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                {% endif %}
+            </div>
+
+            <h1><b>{{ user_profile.follows_users.count }}</b></h1>
+            <h2>Following</h2>
+        </div>
+
+        <div class="followingContent">
+            {% for following in user_profile.follows_users.all %}
+                <div class="followingWrapper">
+                    <a href="{% url 'users:user' following.user.username %}">
+                        <div class="userProfileAvatar">
+                            {% if following.avatar %}
+                                <img src="{{ following.avatar.url }}" alt="" height="168" width="168">
+                            {% else %}
+                                <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                            {% endif %}
+                        </div>
+
+                        <h3>{{ following.user.get_full_name }}</h3>
+                    </a>
+
+                    <form action="">
+                        <input type="submit" value="Follow">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

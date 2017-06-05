@@ -30,8 +30,17 @@
             {% endif %}
 
             <h1>{{ user_profile.user.get_full_name }}</h1>
-            <p><b></b> Followers</p>
-            <p><b></b> Following</p>
+            <a href="{% url 'users:followers' user_profile.user.username %}">
+                {% blocktrans count counter=user_profile.followers|length %}
+                    <p><b>{{ counter }}</b> Follower</p>
+                {% plural %}
+                    <p><b>{{ counter }}</b> Followers</p>
+                {% endblocktrans %}
+            </a>
+            <a href="{% url 'users:following' user_profile.user.username %}">
+                <p><b>{{ user_profile.follows_users.count }}</b> Following</p>
+            </a>
+
             <div class="userProfileAvatar">
                 {% if user_profile.avatar %}
                     <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">

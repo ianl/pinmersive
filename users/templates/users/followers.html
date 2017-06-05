@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="followersPage">
+        <div class="followersHeader">
+            <div class="userProfileAvatar">
+                {% if user_profile.avatar %}
+                    <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                {% endif %}
+            </div>
+
+            {% blocktrans count counter=user_profile.followers|length %}
+                <h1><b>{{ counter }}</b></h1>
+                <h2>Follower</h2>
+            {% plural %}
+                <h1><b>{{ counter }}</b></h1>
+                <h2>Followers</h2>
+            {% endblocktrans %}
+        </div>
+
+        <div class="followersContent">
+            {% for follower in user_profile.followers %}
+                <div class="followersWrapper">
+                    <a href="{% url 'users:user' follower.user.username %}">
+                        <div class="userProfileAvatar">
+                            {% if follower.avatar %}
+                                <img src="{{ follower.avatar.url }}" alt="" height="168" width="168">
+                            {% else %}
+                                <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                            {% endif %}
+                        </div>
+
+                        <h3>{{ follower.user.get_full_name }}</h3>
+                    </a>
+
+                    <form action="">
+                        <input type="submit" value="Follow">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

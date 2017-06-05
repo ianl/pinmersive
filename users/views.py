@@ -7,7 +7,7 @@ from pins.models import Pin
 
 # Create your views here.
 
-#Boards
+# Boards
 def boards(request, username):
     user = User.objects.get(username=username)
     user_profile = UserProfile.objects.get(user=user)
@@ -22,7 +22,7 @@ def board(request, username, board_name):
 
     return render(request, 'users/board.html', {'board': board, 'user_profile': user_profile})
 
-#Pins
+# Pins
 def pins(request, username):
     user = User.objects.get(username=username)
     user_profile = UserProfile.objects.get(user=user)
@@ -34,3 +34,23 @@ def pins(request, username):
     list(set(user_pins))
 
     return render(request, 'users/pins.html', {"user_profile": user_profile, "user_pins": user_pins})
+
+# Relationships
+def following(request, username):
+    user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=user)
+
+    return render(request, 'users/following.html', {"user_profile": user_profile})
+
+def followers(request, username):
+    user = User.objects.get(username=username)
+    user_profile = UserProfile.objects.get(user=user)
+
+    return render(request, 'users/followers.html', {"user_profile": user_profile})
+
+
+
+
+
+
+
