@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Category
 from boards.models import Board
@@ -11,7 +11,8 @@ def index(request):
     return render(request, 'categories/index.html', {'categories': categories})
 
 def show(request, name):
-    pins = Pin.objects.filter(board__category__name=name)
+    category = get_object_or_404(Category, name=name)
+    pins = Pin.objects.filter(board__category=category)
     list(set(pins))
 
-    return render(request, 'categories/show.html', {'category_name': name, 'pins': pins})
+    return render(request, 'categories/show.html', {'category': category, 'pins': pins})
