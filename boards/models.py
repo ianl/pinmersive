@@ -6,8 +6,8 @@ class Board(models.Model):
     description = models.CharField(max_length=500)
     secret = models.BooleanField(default=False)
 
-    user_profile = models.ForeignKey("users.UserProfile", on_delete=models.CASCADE)
-    category = models.ForeignKey("categories.Category", blank=True, null=True)
+    user_profile = models.ForeignKey("users.UserProfile", on_delete=models.CASCADE, related_name='boards')
+    category = models.ForeignKey("categories.Category", blank=True, null=True, related_name='boards')
 
     class Meta:
         unique_together = ("user_profile", "name")

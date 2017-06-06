@@ -3,13 +3,13 @@
 
 {% block content %}
     <div class="userProfilePins">
-        {% blocktrans count counter=user_pins|length %}
+        {% blocktrans count counter=pins|length %}
             <p><b>{{ counter }}</b> Pin</p>
         {% plural %}
             <p><b>{{ counter }}</b> Pins</p>
         {% endblocktrans %}
 
-        {% for pin in user_pins %}
+        {% for pin in pins %}
             <div class="pin">
                 <a class="pinLink" href="{% url 'pins:pin' pin.id %}">
                     <img src="/media/{{ pin.image_file }}" alt="">

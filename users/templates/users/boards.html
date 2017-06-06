@@ -3,10 +3,10 @@
 
 {% block content %}
     <div class="userProfileBoards">
-        {% for board in user_boards %}
+        {% for board in user_profile.boards.all %}
             <div class="board">
                 <a href="{% url 'users:board' user_profile.user.username board.name %}">
-                    {% for pin in board.pin_set.all %}
+                    {% for pin in board.pins.all %}
                         <div class="pin">
                             <img src="/media/{{ pin.image_file }}" alt="">
                         </div>
@@ -14,7 +14,7 @@
                     
                     <h2>{{ board.name }}</h2>
 
-                    {% blocktrans count counter=board.pin_set.count %}
+                    {% blocktrans count counter=board.pins.count %}
                         <p><b>{{ counter }}</b> Pin</p>
                     {% plural %}
                         <p><b>{{ counter }}</b> Pins</p>

@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from .models import Category
 from boards.models import Board
+from pins.models import Pin
 
 # Create your views here.
 def index(request):
@@ -10,13 +11,7 @@ def index(request):
     return render(request, 'categories/index.html', {'categories': categories})
 
 def show(request, name):
-    category = Category.objects.get(name=name)
-    boards = Board.objects.filter(category=category)
-
-    pins = []
-    for board in boards:
-        for pin in board.pin_set.all():
-            pins.append(pin)
+    pins = Pin.objects.filter(board__category__name=name)
     list(set(pins))
 
     return render(request, 'categories/show.html', {'category_name': name, 'pins': pins})

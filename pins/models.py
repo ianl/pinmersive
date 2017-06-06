@@ -9,7 +9,7 @@ class Pin(models.Model):
     image_url = models.URLField(max_length=2000, validators=[URLValidator()])
     image_file = models.ImageField(upload_to='pin_images/')
 
-    board = models.ForeignKey("boards.Board", on_delete=models.CASCADE)
+    board = models.ForeignKey("boards.Board", on_delete=models.CASCADE, related_name='pins')
 
     def __str__(self):
         return str(self.id)

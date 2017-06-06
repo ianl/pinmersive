@@ -12,27 +12,22 @@ from relationships.models import UserFollowsUser
 # Boards
 def boards(request, username):
     user_profile = User.objects.get(username=username).user_profile
-    user_boards = user_profile.board_set.all()
 
-    return render(request, 'users/boards.html', {"user_profile": user_profile, "user_boards": user_boards})
+    return render(request, 'users/boards.html', {"user_profile": user_profile})
 
 def board(request, username, board_name):
     user_profile = User.objects.get(username=username).user_profile
-    board = user_profile.board_set.get(name=board_name.lower())
+    board = user_profile.boards.get(name=board_name.lower())
 
-    return render(request, 'users/board.html', {'board': board, 'user_profile': user_profile})
+    return render(request, 'users/board.html', {'user_profile': user_profile, 'board': board})
 
 # Pins
 def pins(request, username):
     user_profile = User.objects.get(username=username).user_profile
+    pins = Pin.objects.filter(board__user_profile__user__username=username)
+    list(set(pins))
 
-    user_pins = []
-    for board in user_profile.board_set.all():
-        for pin in board.pin_set.all():
-            user_pins.append(pin)
-    list(set(user_pins))
-
-    return render(request, 'users/pins.html', {"user_profile": user_profile, "user_pins": user_pins})
+    return render(request, 'users/pins.html', {"user_profile": user_profile, "pins": pins})
 
 # Relationships
 def following(request, username):
