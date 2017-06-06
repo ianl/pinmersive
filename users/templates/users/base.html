@@ -24,8 +24,14 @@
     <div class="userProfilePage">
         <div class="userProfileHeader">
             {% if user != user_profile.user %}
-                <form action="">
+                <form action="{% url 'users:follow' user_profile.user.username %}" method="POST">
+                    {% csrf_token %}
                     <input type="submit" value="Follow">
+                </form>
+
+                <form action="{% url 'users:unfollow' user_profile.user.username %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Unfollow">
                 </form>
             {% endif %}
 

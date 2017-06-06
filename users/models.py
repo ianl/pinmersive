@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     location = models.CharField(max_length=255)
     avatar = models.ImageField(upload_to='user_profile_avatars/', blank=True)
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
     follows_users = models.ManyToManyField('self', through="relationships.UserFollowsUser", symmetrical=False, blank=True)
 
     def __str__(self):

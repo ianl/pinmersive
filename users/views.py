@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 from users.models import UserProfile
 from boards.models import Board
 from pins.models import Pin
+from relationships.models import UserFollowsUser
 
 # Create your views here.
 
@@ -48,9 +50,25 @@ def followers(request, username):
 
     return render(request, 'users/followers.html', {"user_profile": user_profile})
 
+def follow(request, username):
+    if request.method == 'POST':
+        if username != request.user.username:
+            user = User.objects.get(username=username)
+            following = UserProfile.objects.get(user=user)
+            follower = request.user.user_profile
 
+            UserFollowsUser.objects.create(follower=follower, following=following)
 
+    return redirect(reverse('users:user', kwargs={'username': username}))
 
+def unfollow(request, username):
+    if request.method == 'POST':
+        if username != request.user.username:
+            user = User.objects.get(username=username)
+            following = UserProfile.objects.get(user=user)
+            follower = request.user.user_profile
 
+            relationship = get_object_or_404(UserFollowsUser, follower=follower, following=following)
+            relationship.delete()
 
-
+    return redirect(reverse('users:user', kwargs={'username': username}))
