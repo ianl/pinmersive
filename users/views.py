@@ -11,23 +11,20 @@ from relationships.models import UserFollowsUser
 
 # Boards
 def boards(request, username):
-    user = User.objects.get(username=username)
-    user_profile = UserProfile.objects.get(user=user)
+    user_profile = User.objects.get(username=username).user_profile
     user_boards = user_profile.board_set.all()
 
     return render(request, 'users/boards.html', {"user_profile": user_profile, "user_boards": user_boards})
 
 def board(request, username, board_name):
-    user = User.objects.get(username=username)
-    user_profile = UserProfile.objects.get(user=user)
+    user_profile = User.objects.get(username=username).user_profile
     board = user_profile.board_set.get(name=board_name.lower())
 
     return render(request, 'users/board.html', {'board': board, 'user_profile': user_profile})
 
 # Pins
 def pins(request, username):
-    user = User.objects.get(username=username)
-    user_profile = UserProfile.objects.get(user=user)
+    user_profile = User.objects.get(username=username).user_profile
 
     user_pins = []
     for board in user_profile.board_set.all():
@@ -39,23 +36,20 @@ def pins(request, username):
 
 # Relationships
 def following(request, username):
-    user = User.objects.get(username=username)
-    user_profile = UserProfile.objects.get(user=user)
+    user_profile = User.objects.get(username=username).user_profile
 
     return render(request, 'users/following.html', {"user_profile": user_profile})
 
 def followers(request, username):
-    user = User.objects.get(username=username)
-    user_profile = UserProfile.objects.get(user=user)
+    user_profile = User.objects.get(username=username).user_profile
 
     return render(request, 'users/followers.html', {"user_profile": user_profile})
 
 def follow(request, username):
     if request.method == 'POST':
         if username != request.user.username:
-            user = User.objects.get(username=username)
-            following = UserProfile.objects.get(user=user)
             follower = request.user.user_profile
+            following = User.objects.get(username=username).user_profile
 
             UserFollowsUser.objects.create(follower=follower, following=following)
 
@@ -64,9 +58,8 @@ def follow(request, username):
 def unfollow(request, username):
     if request.method == 'POST':
         if username != request.user.username:
-            user = User.objects.get(username=username)
-            following = UserProfile.objects.get(user=user)
             follower = request.user.user_profile
+            following = User.objects.get(username=username).user_profile
 
             relationship = get_object_or_404(UserFollowsUser, follower=follower, following=following)
             relationship.delete()
