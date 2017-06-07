@@ -32,9 +32,17 @@
                         <h3>{{ following.user.get_full_name }}</h3>
                     </a>
 
-                    <form action="">
-                        <input type="submit" value="Follow">
-                    </form>
+                    {% if user != following.user %}
+                        <form action="{% url 'users:follow' following.user.username %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Follow">
+                        </form>
+
+                        <form action="{% url 'users:unfollow' following.user.username %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Unfollow">
+                        </form>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
