@@ -5,8 +5,14 @@
 {% block content %}
     <div class="boardWrapper">
         {% if user != user_profile.user %}
-            <form action="">
+            <form action="{% url 'users:follow_board' user_profile.user.username board.name %}" method="POST">
+                {% csrf_token %}
                 <input type="submit" value="Follow board">
+            </form>
+
+            <form action="{% url 'users:unfollow_board' user_profile.user.username board.name %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Unfollow board">
             </form>
         {% endif %}
 

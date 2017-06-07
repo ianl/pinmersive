@@ -9,6 +9,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
     follows_users = models.ManyToManyField('self', through="relationships.UserFollowsUser", symmetrical=False, blank=True)
+    follows_boards = models.ManyToManyField('boards.Board', through='relationships.UserFollowsBoard', blank=True)
 
     def __str__(self):
         return self.user.username

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from users.models import UserProfile
 from boards.models import Board
 from pins.models import Pin
-from relationships.models import UserFollowsUser
+from relationships.models import UserFollowsUser, UserFollowsBoard
 
 # Create your views here.
 
@@ -20,6 +20,31 @@ def board(request, username, board_name):
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
 
     return render(request, 'users/board.html', {'user_profile': user_profile, 'board': board})
+
+def follow_board(request, username, board_name):
+    if request.method == 'POST':
+        if username != request.user.username:
+            follower = request.user.user_profile
+
+            user_profile_of_board = get_object_or_404(User, username=username).user_profile
+            following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
+
+            UserFollowsBoard.objects.create(follower=follower, following=following)
+
+    return redirect(reverse('users:board', kwargs={'username': username, 'board_name': board_name}))
+
+def unfollow_board(request, username, board_name):
+    if request.method == 'POST':
+        if username != request.user.username:
+            follower = request.user.user_profile
+
+            user_profile_of_board = get_object_or_404(User, username=username).user_profile
+            following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
+
+            relationship = get_object_or_404(UserFollowsBoard, follower=follower, following=following)
+            relationship.delete()
+
+    return redirect(reverse('users:board', kwargs={'username': username, 'board_name': board_name}))
 
 # Pins
 def pins(request, username):

@@ -10,3 +10,13 @@ class UserFollowsUser(models.Model):
 
     def __str__(self):
         return str(self.follower.user.username) + " follows " + str(self.following.user.username)
+
+class UserFollowsBoard(models.Model):
+    follower = models.ForeignKey("users.UserProfile", on_delete=models.CASCADE)
+    following = models.ForeignKey("boards.Board", on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("follower", "following")
+
+    def __str__(self):
+        return str(self.follower.user.username) + " follows " + str(self.following.user_profile.user.username) + "'s " + str(self.following.name)
