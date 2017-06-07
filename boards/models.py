@@ -1,4 +1,5 @@
 from django.db import models
+from relationships.models import UserFollowsBoard
 
 # Create your models here.
 class Board(models.Model):
@@ -17,3 +18,9 @@ class Board(models.Model):
 
     def __str__(self):
         return str(self.user_profile.user.username) + "'s " + str(self.name)
+
+    def followers(self):
+        relationships = UserFollowsBoard.objects.filter(following=self)
+        followers = [relationship.follower for relationship in relationships]
+        
+        return followers

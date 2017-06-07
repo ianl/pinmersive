@@ -2,51 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
-from users.models import UserProfile
-from boards.models import Board
+from .models import UserProfile
 from pins.models import Pin
-from relationships.models import UserFollowsUser, UserFollowsBoard
+from relationships.models import UserFollowsUser
 
 # Create your views here.
 
-# Boards
 def boards(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
 
     return render(request, 'users/boards.html', {"user_profile": user_profile})
 
-def board(request, username, board_name):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    board = get_object_or_404(user_profile.boards, name=board_name.lower())
-
-    return render(request, 'users/board.html', {'user_profile': user_profile, 'board': board})
-
-def follow_board(request, username, board_name):
-    if request.method == 'POST':
-        if username != request.user.username:
-            follower = request.user.user_profile
-
-            user_profile_of_board = get_object_or_404(User, username=username).user_profile
-            following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
-
-            UserFollowsBoard.objects.create(follower=follower, following=following)
-
-    return redirect(reverse('users:board', kwargs={'username': username, 'board_name': board_name}))
-
-def unfollow_board(request, username, board_name):
-    if request.method == 'POST':
-        if username != request.user.username:
-            follower = request.user.user_profile
-
-            user_profile_of_board = get_object_or_404(User, username=username).user_profile
-            following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
-
-            relationship = get_object_or_404(UserFollowsBoard, follower=follower, following=following)
-            relationship.delete()
-
-    return redirect(reverse('users:board', kwargs={'username': username, 'board_name': board_name}))
-
-# Pins
 def pins(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
     pins = Pin.objects.filter(board__user_profile=user_profile)

@@ -5,7 +5,7 @@
     <div class="userProfileBoards">
         {% for board in user_profile.boards.all %}
             <div class="board">
-                <a href="{% url 'users:board' user_profile.user.username board.name %}">
+                <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
                     {% for pin in board.pins.all %}
                         <div class="pin">
                             <img src="/media/{{ pin.image_file }}" alt="">

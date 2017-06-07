@@ -11,7 +11,7 @@
         </form>
         <p>
             <a href="{% url 'users:user' pin.board.user_profile.user.username %}">{{ pin.board.user_profile.user.username }}</a> saved to
-            <a href="{% url 'users:board' pin.board.user_profile.user.username pin.board.name %}"> {{ pin.board.name }}</a>
+            <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}"> {{ pin.board.name }}</a>
         </p> 
         <p>{{ pin.description }}</p>  
     </div>
