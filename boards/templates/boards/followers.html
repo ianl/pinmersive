@@ -5,25 +5,18 @@
 {% block content %}
     <div class="followersPage">
         <div class="followersHeader">
-            <div class="userProfileAvatar">
-                {% if user_profile.avatar %}
-                    <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
-                {% else %}
-                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                {% endif %}
-            </div>
-
-            {% blocktrans count counter=user_profile.followers|length %}
-                <h1><b>{{ counter }}</b></h1>
-                <h2>Follower</h2>
-            {% plural %}
-                <h1><b>{{ counter }}</b></h1>
-                <h2>Followers</h2>
-            {% endblocktrans %}
+            <h1>
+                Followers •
+                {% blocktrans count counter=board.followers|length %}
+                    {{ counter }} Follower
+                {% plural %}
+                    {{ counter }} Followers
+                {% endblocktrans %}
+            </h1>
         </div>
 
         <div class="followersContent">
-            {% for follower in user_profile.followers %}
+            {% for follower in board.followers %}
                 <div class="followersWrapper">
                     <a href="{% url 'users:user' follower.user.username %}">
                         <div class="userProfileAvatar">
@@ -36,7 +29,6 @@
 
                         <h3>{{ follower.user.get_full_name }}</h3>
                     </a>
-
                     {% if user != follower.user %}
                         <form action="{% url 'users:follow' follower.user.username %}" method="POST">
                             {% csrf_token %}

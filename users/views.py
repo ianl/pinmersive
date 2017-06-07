@@ -7,7 +7,6 @@ from pins.models import Pin
 from relationships.models import UserFollowsUser
 
 # Create your views here.
-
 def boards(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
 

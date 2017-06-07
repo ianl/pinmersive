@@ -4,13 +4,13 @@
 
 {% block content %}
     <div class="boardWrapper">
-        {% if user != user_profile.user %}
-            <form action="{% url 'users:boards:follow' user_profile.user.username board.name %}" method="POST">
+        {% if user != board.user_profile.user %}
+            <form action="{% url 'users:boards:follow' board.user_profile.user.username board.name %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="Follow board">
             </form>
 
-            <form action="{% url 'users:boards:unfollow' user_profile.user.username board.name %}" method="POST">
+            <form action="{% url 'users:boards:unfollow' board.user_profile.user.username board.name %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="Unfollow board">
             </form>
@@ -24,16 +24,18 @@
             <p><b>{{ counter }}</b> Pins</p>
         {% endblocktrans %}
 
-        {% blocktrans count counter=board.followers|length %}
-            <p><b>{{ counter }}</b> Follower</p>
-        {% plural %}
-            <p><b>{{ counter }}</b> Followers</p>
-        {% endblocktrans %}
+        <a href="{% url 'users:boards:followers' board.user_profile.user.username board.name %}">
+            {% blocktrans count counter=board.followers|length %}
+                <p><b>{{ counter }}</b> Follower</p>
+            {% plural %}
+                <p><b>{{ counter }}</b> Followers</p>
+            {% endblocktrans %}
+        </a>
 
         <div class="userProfileAvatar">
-            <a href="{% url 'users:user' user_profile.user.username %}">
-                {% if user_profile.avatar %}
-                    <img src="{{ user_profile.avatar.url }}" alt="" height="60" width="60">
+            <a href="{% url 'users:user' board.user_profile.user.username %}">
+                {% if board.user_profile.avatar %}
+                    <img src="{{ board.user_profile.avatar.url }}" alt="" height="60" width="60">
                 {% else %}
                     <img src="{% static 'images/default-avatar.png' %}" alt="" height="60" width="60">
                 {% endif %}

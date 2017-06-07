@@ -10,7 +10,14 @@ def show(request, username, board_name):
     user_profile = get_object_or_404(User, username=username).user_profile
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
 
-    return render(request, 'boards/show.html', {'user_profile': user_profile, 'board': board})
+    return render(request, 'boards/show.html', {'board': board})
+
+# Relationships
+def followers(request, username, board_name):
+    user_profile = get_object_or_404(User, username=username).user_profile
+    board = get_object_or_404(user_profile.boards, name=board_name.lower())
+
+    return render(request, 'boards/followers.html', {'board': board})
 
 def follow(request, username, board_name):
     if request.method == 'POST':
