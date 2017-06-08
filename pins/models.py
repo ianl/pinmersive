@@ -5,7 +5,7 @@ import uuid
 # Create your models here.
 class Pin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
     image_url = models.URLField(max_length=2000, validators=[URLValidator()])
     image_file = models.ImageField(upload_to='pin_images/')
 

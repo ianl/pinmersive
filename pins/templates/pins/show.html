@@ -2,6 +2,13 @@
 
 {% block content %}
     <div class="pinWrapper">
+        {% if pin.board.user_profile.user == user %}
+            <form action="{% url 'pins:edit' pin.id %}" method="GET">
+                {% csrf_token %}
+                <input type="submit" value="Edit">
+            </form>
+        {% endif %}
+
         <a href="{{ pin.image_url }}" target="_blank">
             <img src="/media/{{ pin.image_file }}" alt="">
         </a>
