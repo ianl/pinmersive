@@ -14,6 +14,11 @@
                 {% csrf_token %}
                 <input type="submit" value="Unfollow board">
             </form>
+        {% else %}
+            <form action="{% url 'users:boards:edit' board.user_profile.user.username board.name %}" method="GET">
+                {% csrf_token %}
+                <input type="submit" value="Edit board">
+            </form>
         {% endif %}
 
         <h1>{{ board.name }}</h1>

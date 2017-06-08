@@ -6,11 +6,14 @@ from .models import UserProfile
 from pins.models import Pin
 from relationships.models import UserFollowsUser
 
+from boards.forms import NewBoardForm
+
 # Create your views here.
 def boards(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
+    board_form = NewBoardForm()
 
-    return render(request, 'users/boards.html', {"user_profile": user_profile})
+    return render(request, 'users/boards.html', {"user_profile": user_profile, 'board_form': board_form})
 
 def pins(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile

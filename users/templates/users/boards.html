@@ -3,6 +3,18 @@
 
 {% block content %}
     <div class="userProfileBoards">
+        
+        {% if user == user_profile.user %}
+            <div class="boardCreate">
+                <h1>Create board</h1>
+                <form action="{% url 'users:boards_create' user_profile.user.username %}" method="POST">
+                    {% csrf_token %}
+                    {{ board_form.as_p }}
+                    <input type="submit" value="Create">
+                </form>
+            </div>
+        {% endif %}
+
         {% for board in user_profile.boards.all %}
             <div class="board">
                 <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
