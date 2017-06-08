@@ -12,6 +12,9 @@ def show(request, username, board_name):
     user_profile = get_object_or_404(User, username=username).user_profile
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
 
+    if board.secret and user_profile != request.user.user_profile:
+        get_object_or_404(Board, name=None)
+
     return render(request, 'boards/show.html', {'board': board})
 
 def create(request, username):

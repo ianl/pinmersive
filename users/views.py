@@ -13,7 +13,16 @@ def boards(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
     board_form = NewBoardForm()
 
-    return render(request, 'users/boards.html', {"user_profile": user_profile, 'board_form': board_form})
+    public_boards = user_profile.boards.filter(secret=False)
+    secret_boards = user_profile.boards.filter(secret=True)
+
+    return render(request, 'users/boards.html', {
+            "user_profile": user_profile, 
+            'board_form': board_form, 
+            'public_boards': public_boards, 
+            'secret_boards': secret_boards
+        }
+    )
 
 def pins(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile

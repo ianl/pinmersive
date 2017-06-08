@@ -15,30 +15,65 @@
             </div>
         {% endif %}
 
-        {% for board in user_profile.boards.all %}
-            <div class="board">
-                <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
-                    {% for pin in board.pins.all %}
-                        <div class="pin">
-                            <img src="/media/{{ pin.image_file }}" alt="">
-                        </div>
-                    {% endfor %}
-                    
-                    <h2>{{ board.name }}</h2>
+        <div class="publicBoardsWrapper">
+            {% for board in public_boards %}
+                <div class="board">
+                    <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
+                        {% for pin in board.pins.all %}
+                            <div class="pin">
+                                <img src="/media/{{ pin.image_file }}" alt="">
+                            </div>
+                        {% endfor %}
+                        
+                        <h2>{{ board.name }}</h2>
 
-                    {% blocktrans count counter=board.pins.count %}
-                        <p><b>{{ counter }}</b> Pin</p>
-                    {% plural %}
-                        <p><b>{{ counter }}</b> Pins</p>
-                    {% endblocktrans %}
-                </a>
-                
-                {% if user != user_profile.user %}
-                    <form action="">
-                        <input type="submit" value="Follow">
-                    </form>
-                {% endif %}
+                        {% blocktrans count counter=board.pins.count %}
+                            <p><b>{{ counter }}</b> Pin</p>
+                        {% plural %}
+                            <p><b>{{ counter }}</b> Pins</p>
+                        {% endblocktrans %}
+                    </a>
+                    
+                    {% if user != user_profile.user %}
+                        <form action="{% url 'users:boards:follow' board.user_profile.user.username board.name %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Follow">
+                        </form>
+
+                        <form action="{% url 'users:boards:unfollow' board.user_profile.user.username board.name %}" method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Unfollow">
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %} 
+        </div>
+
+        {% if user == user_profile.user %}
+            <div class="secretsBoardsWrapper">
+                <h2>Secret boards</h2>
+                <p>Only you (and people you invite) can see these boards. Learn more</p>
+
+                {% for board in secret_boards %}
+                    <div class="board">
+                        <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
+                            {% for pin in board.pins.all %}
+                                <div class="pin">
+                                    <img src="/media/{{ pin.image_file }}" alt="">
+                                </div>
+                            {% endfor %}
+                            
+                            <h2>{{ board.name }}</h2>
+
+                            {% blocktrans count counter=board.pins.count %}
+                                <p><b>{{ counter }}</b> Pin</p>
+                            {% plural %}
+                                <p><b>{{ counter }}</b> Pins</p>
+                            {% endblocktrans %}
+                        </a>
+                    </div>
+                {% endfor %}       
             </div>
-        {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
