@@ -17,7 +17,7 @@ def boards(request, username):
     secret_boards = user_profile.boards.filter(secret=True)
 
     return render(request, 'users/boards.html', {
-            "user_profile": user_profile, 
+            'user_profile': user_profile, 
             'board_form': board_form, 
             'public_boards': public_boards, 
             'secret_boards': secret_boards
@@ -29,18 +29,18 @@ def pins(request, username):
     pins = Pin.objects.filter(board__user_profile=user_profile)
     list(set(pins))
 
-    return render(request, 'users/pins.html', {"user_profile": user_profile, "pins": pins})
+    return render(request, 'users/pins.html', {'user_profile': user_profile, 'pins': pins})
 
 # Relationships
 def following(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
 
-    return render(request, 'users/following.html', {"user_profile": user_profile})
+    return render(request, 'users/following.html', {'user_profile': user_profile})
 
 def followers(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
 
-    return render(request, 'users/followers.html', {"user_profile": user_profile})
+    return render(request, 'users/followers.html', {'user_profile': user_profile})
 
 def follow(request, username):
     if request.method == 'POST':
