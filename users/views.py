@@ -26,7 +26,7 @@ def boards(request, username):
 
 def pins(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
-    pins = Pin.objects.filter(board__user_profile=user_profile)
+    pins = Pin.objects.filter(board__user_profile=user_profile, board__secret=False)
     list(set(pins))
 
     return render(request, 'users/pins.html', {'user_profile': user_profile, 'pins': pins})

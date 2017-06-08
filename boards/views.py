@@ -69,6 +69,9 @@ def followers(request, username, board_name):
     user_profile = get_object_or_404(User, username=username).user_profile
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
 
+    if board.secret and user_profile != request.user.user_profile:
+        get_object_or_404(Board, name=None)
+
     return render(request, 'boards/followers.html', {'board': board})
 
 def follow(request, username, board_name):
@@ -78,6 +81,9 @@ def follow(request, username, board_name):
 
             user_profile_of_board = get_object_or_404(User, username=username).user_profile
             following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
+
+            if following.secret:
+                get_object_or_404(Board, name=None)
 
             UserFollowsBoard.objects.create(follower=follower, following=following)
 
@@ -90,6 +96,9 @@ def unfollow(request, username, board_name):
 
             user_profile_of_board = get_object_or_404(User, username=username).user_profile
             following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
+
+            if following.secret:
+                get_object_or_404(Board, name=None)
 
             relationship = get_object_or_404(UserFollowsBoard, follower=follower, following=following)
             relationship.delete()

@@ -10,14 +10,17 @@ from urllib.parse import urlparse
 
 # Create your views here.
 def index(request):
-    pins = Pin.objects.all()
+    pins = Pin.objects.filter(board__secret=False)
 
     return render(request, 'pins/index.html', {'pins': pins})
 
 def show(request, id):
     pin = get_object_or_404(Pin, id=id)
-    parsed = urlparse(pin.image_url)
 
+    if pin.board.secret and pin.board.user_profile.user != request.user:
+        get_object_or_404(Pin, id=None)
+
+    parsed = urlparse(pin.image_url)
     return render(request, 'pins/show.html', {'pin': pin, 'netloc': parsed.netloc})
 '''
 def create(request, username):

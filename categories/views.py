@@ -12,7 +12,7 @@ def index(request):
 
 def show(request, name):
     category = get_object_or_404(Category, name=name)
-    pins = Pin.objects.filter(board__category=category)
+    pins = Pin.objects.filter(board__category=category, board__secret=False)
     list(set(pins))
 
     return render(request, 'categories/show.html', {'category': category, 'pins': pins})
