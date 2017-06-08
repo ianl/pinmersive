@@ -7,8 +7,6 @@ class NewBoardForm(forms.ModelForm):
         fields = ['name', 'secret']
 
 class EditBoardForm(forms.ModelForm):
-    description = forms.CharField(required=False)
-
     class Meta:
         model = Board
         fields = ['name', 'description', 'category', 'secret']

@@ -4,7 +4,7 @@ from relationships.models import UserFollowsBoard
 # Create your models here.
 class Board(models.Model):
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=500, blank=True)
     secret = models.BooleanField(default=False)
 
     user_profile = models.ForeignKey('users.UserProfile', on_delete=models.CASCADE, related_name='boards')
