@@ -3,19 +3,30 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 from .models import Board
+from pins.models import Pin
 from relationships.models import UserFollowsBoard
 
 from .forms import NewBoardForm, EditBoardForm
+from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm
 
 # Create your views here.
 def show(request, username, board_name):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    board = get_object_or_404(user_profile.boards, name=board_name.lower())
+    user = get_object_or_404(User, username=username)
+    board = get_object_or_404(user.user_profile.boards, name=board_name.lower())
 
-    if board.secret and user_profile != request.user.user_profile:
+    if board.secret and user.user_profile != request.user.user_profile:
         get_object_or_404(Board, name=None)
 
-    return render(request, 'boards/show.html', {'board': board})
+    pin = Pin(board=board)
+    pin_from_web_form = NewPinFromWebForm(instance=pin, user=user)
+    pin_from_device_form = NewPinFromDeviceForm(instance=pin, user=user)
+
+    return render(request, 'boards/show.html', {
+            'board': board, 
+            'pin_from_web_form': pin_from_web_form, 
+            'pin_from_device_form': pin_from_device_form
+        }
+    )
 
 def create(request, username):
     user = get_object_or_404(User, username=username)

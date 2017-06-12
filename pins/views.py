@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 from .models import Pin
 from categories.models import Category
@@ -22,22 +23,23 @@ def show(request, id):
 
     parsed = urlparse(pin.image_url)
     return render(request, 'pins/show.html', {'pin': pin, 'netloc': parsed.netloc})
-'''
+
 def create(request, username):
     user = get_object_or_404(User, username=username)
 
     if user == request.user and request.method == 'POST':
-        form = NewPinForm(request.POST)
+        form = NewPinForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+            pin = form.save()
+            return redirect(reverse('pins:show', kwargs={'id': pin.id}))
 
     return redirect(reverse('users:boards:show', kwargs={
             'username': username, 
-            'board_name': form.fields['board'].name
+            'board_name': pin.board.name
         })
     )
-'''
+
 def edit(request, id):
     pin = get_object_or_404(Pin, id=id)
 

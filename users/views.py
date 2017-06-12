@@ -7,6 +7,7 @@ from pins.models import Pin
 from relationships.models import UserFollowsUser
 
 from boards.forms import NewBoardForm
+from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm
 
 # Create your views here.
 def boards(request, username):
@@ -29,7 +30,16 @@ def pins(request, username):
     pins = Pin.objects.filter(board__user_profile=user_profile, board__secret=False)
     list(set(pins))
 
-    return render(request, 'users/pins.html', {'user_profile': user_profile, 'pins': pins})
+    pin_from_web_form = NewPinFromWebForm(user=request.user)
+    pin_from_device_form = NewPinFromDeviceForm(user=request.user)
+
+    return render(request, 'users/pins.html', {
+            'user_profile': user_profile, 
+            'pins': pins, 
+            'pin_from_web_form': pin_from_web_form, 
+            'pin_from_device_form': pin_from_device_form
+        }
+    )
 
 # Relationships
 def following(request, username):

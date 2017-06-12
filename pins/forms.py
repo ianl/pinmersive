@@ -9,11 +9,12 @@ class NewPinForm(forms.ModelForm):
         fields = ['image_file', 'image_url', 'board', 'description']
 
 class NewPinFromWebForm(forms.ModelForm):
+    image_url = forms.URLField(required=True)
     board = forms.ModelChoiceField(queryset=None)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(EditPinForm, self).__init__(*args, **kwargs)
+        super(NewPinFromWebForm, self).__init__(*args, **kwargs)
         
         self.fields['board'].queryset = Board.objects.filter(user_profile__user=user)
 
@@ -22,11 +23,12 @@ class NewPinFromWebForm(forms.ModelForm):
         fields = ['image_url', 'board', 'description']
 
 class NewPinFromDeviceForm(forms.ModelForm):
+    image_file = forms.ImageField(required=True)
     board = forms.ModelChoiceField(queryset=None)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(EditPinForm, self).__init__(*args, **kwargs)
+        super(NewPinFromDeviceForm, self).__init__(*args, **kwargs)
         
         self.fields['board'].queryset = Board.objects.filter(user_profile__user=user)
     

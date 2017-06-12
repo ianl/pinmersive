@@ -26,9 +26,6 @@ class Pin(models.Model):
     board = models.ForeignKey('boards.Board', on_delete=models.CASCADE, related_name='pins')
 
     def save(self, *args, **kwargs):
-        if not self.image_url and not self.image_file:
-            return
-
         super(Pin, self).save(*args, **kwargs)
 
         if self.image_url and not self.image_file:
@@ -36,6 +33,8 @@ class Pin(models.Model):
         elif self.image_file and not self.image_url:
             self.image_url = self.image_file.url
             self.save()
+        else:
+            return
 
     def __str__(self):
         return str(self.id)
