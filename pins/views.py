@@ -34,7 +34,7 @@ def create(request, username):
 
     return redirect(reverse('users:boards:show', kwargs={
             'username': username, 
-            'board_name': form.fields['board']
+            'board_name': form.fields['board'].name
         })
     )
 '''
