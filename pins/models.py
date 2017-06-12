@@ -6,15 +6,8 @@ from django.core.files.temp import NamedTemporaryFile
 import uuid
 from urllib.request import urlopen
 from urllib.parse import urlsplit
-import os
 
-def update_filename(instance, filename):
-    path = 'pin_images/'
-
-    ext = filename.split('.')[-1]
-    format = str(instance.id) + '.' + str(ext)
-
-    return os.path.join(path, format)
+from .helpers import update_filename
 
 # Create your models here.
 class Pin(models.Model):
