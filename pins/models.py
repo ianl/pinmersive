@@ -30,7 +30,7 @@ class Pin(models.Model):
             return
 
     def __str__(self):
-        return str(self.id)
+        return str(self.id) + " | " + str(self.board)
 
     def save_image_from_url(self):
         image = NamedTemporaryFile(delete=True)

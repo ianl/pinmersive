@@ -17,7 +17,10 @@ class Board(models.Model):
         self.name = self.name.lower()
 
     def __str__(self):
-        return str(self.user_profile.user.username) + "'s " + str(self.name)
+        if self.secret:
+            return str(self.name) + " | " + str(self.user_profile.user.username) + " <secret>"
+        else:
+            return str(self.name) + " | " + str(self.user_profile.user.username)
 
     def followers(self):
         relationships = UserFollowsBoard.objects.filter(following=self)

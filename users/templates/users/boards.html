@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="userProfileBoards">
+    <div class="userProfileBoardsWrapper">
         
         {% if user == user_profile.user %}
             <div class="boardCreate">
@@ -15,7 +15,7 @@
             </div>
         {% endif %}
 
-        <div class="publicBoardsWrapper">
+        <div class="publicBoards">
             {% for board in public_boards %}
                 <div class="board">
                     <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
@@ -50,7 +50,7 @@
         </div>
 
         {% if user == user_profile.user %}
-            <div class="secretsBoardsWrapper">
+            <div class="secretsBoards">
                 <h2>Secret boards</h2>
                 <p>Only you (and people you invite) can see these boards. Learn more</p>
 
@@ -75,5 +75,6 @@
                 {% endfor %}       
             </div>
         {% endif %}
+        
     </div>
 {% endblock %}

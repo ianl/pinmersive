@@ -2,7 +2,8 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="pinEdit">
+    <div class="pinEditWrapper">
+
         <h1>Edit this Pin</h1>
 
         <form action="{% url 'pins:update' pin.id %}" method="POST">
@@ -15,5 +16,6 @@
             {% csrf_token %}
             <input type="submit" value="Delete Pin" onclick="return confirm('Are you sure? Once you delete a Pin, you can\'t undo it!')">
         </form>
+
     </div>
 {% endblock %}

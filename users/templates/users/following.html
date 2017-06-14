@@ -4,6 +4,7 @@
 
 {% block content %}
     <div class="followingPage">
+
         <div class="followingHeader">
             <div class="userProfileAvatar">
                 {% if user_profile.avatar %}
@@ -19,7 +20,9 @@
 
         <div class="followingContent">
             {% for following in user_profile.follows_users.all %}
+
                 <div class="followingWrapper">
+
                     <a href="{% url 'users:user' following.user.username %}">
                         <div class="userProfileAvatar">
                             {% if following.avatar %}
@@ -43,8 +46,11 @@
                             <input type="submit" value="Unfollow">
                         </form>
                     {% endif %}
+                    
                 </div>
+
             {% endfor %}
         </div>
+
     </div>
 {% endblock %}

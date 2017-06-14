@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="userProfilePins">
+    <div class="userProfilePinsWrapper">
 
         {% if user == user_profile.user %}
             <div class="pinCreate">
@@ -37,5 +37,6 @@
                 </a> 
             </div>
         {% endfor %}
+        
     </div>
 {% endblock %}

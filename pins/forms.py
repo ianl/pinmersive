@@ -36,6 +36,19 @@ class NewPinFromDeviceForm(forms.ModelForm):
         model = Pin
         fields = ['image_file', 'board', 'description']
 
+class NewPinFromPinForm(forms.ModelForm):
+    board = forms.ModelChoiceField(queryset=None)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(NewPinFromPinForm, self).__init__(*args, **kwargs)
+        
+        self.fields['board'].queryset = Board.objects.filter(user_profile__user=user)
+    
+    class Meta:
+        model = Pin
+        fields = ['board', 'description']
+
 class EditPinForm(forms.ModelForm):
     board = forms.ModelChoiceField(queryset=None)
 
