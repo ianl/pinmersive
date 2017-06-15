@@ -93,8 +93,6 @@ def register(request):
 
             if form.is_valid():
                 user = form.save()
-                UserProfile.objects.create(user=user)
-
                 login(request, user)
                 return redirect('home')
         else:
