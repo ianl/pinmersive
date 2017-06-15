@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 from .models import UserProfile
 from pins.models import Pin
 from relationships.models import UserFollowsUser
 
+from .forms import NewUserForm
 from boards.forms import NewBoardForm
 from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm
 
@@ -72,3 +74,19 @@ def unfollow(request, username):
             relationship.delete()
 
     return redirect(reverse('users:user', kwargs={'username': username}))
+
+# Auths
+def register(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            UserProfile.objects.create(user=user)
+
+            login(request, user)
+            return redirect('home')
+    else:
+        form = NewUserForm()
+        
+    return render(request, 'registration/register.html', {'form': form})

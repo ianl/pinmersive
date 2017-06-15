@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class UserProfile(models.Model):
-    description = models.CharField(max_length=255)
-    location = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
+    location = models.CharField(max_length=255, blank=True)
     avatar = models.ImageField(upload_to='user_profile_avatars/', blank=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')

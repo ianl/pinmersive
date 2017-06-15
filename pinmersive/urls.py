@@ -17,8 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 from pins import views as pins_views
+from users import views as users_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,6 +28,7 @@ urlpatterns = [
     url(r'^categories/', include('categories.urls', namespace="categories")),
 
     url('^', include('django.contrib.auth.urls')),
+    url(r'^register$', users_views.register, name='register'),
 
     url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
     url(r'^$', pins_views.index, name='home'),
