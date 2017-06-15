@@ -15,6 +15,12 @@
         </div>
 
         {% if user.is_authenticated %}
+            <div class="searchBar">
+                <form action="{% url 'search' %}" method="GET" accept-charset="utf-8">
+                    <input type="text" name="query" placeholder="Search">
+                </form> 
+            </div>
+
             <div class="categoriesMenu">
                 <form action="{% url 'categories:categories' %}">
                     <input type="submit" value="Categories">

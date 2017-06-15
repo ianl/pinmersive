@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Pin
 from categories.models import Category
@@ -90,3 +91,15 @@ def save(request, id):
             return redirect(reverse('pins:show', kwargs={'id': pin_copy.id}))
 
     return redirect(reverse('pins:show', kwargs={'id': pin.id}))
+
+def search(request):
+    query = request.GET['query']
+    query_list = query.split()
+    pins = Pin.objects.filter(board__secret=False)
+
+    result = []
+    for q in query_list:
+        for pin in pins.filter(Q(description__icontains=q) | Q(board__name__icontains=q) | Q(board__description__icontains=q) | Q(board__category__name__icontains=q)):
+            result.append(pin)
+
+    return render(request, 'pins/index.html', {'pins': result})

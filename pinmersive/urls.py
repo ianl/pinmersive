@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 from users import views as users_views
+from pins import views as pins_views
 
 from users.forms import LoginForm
 
@@ -31,6 +32,8 @@ urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True, authentication_form=LoginForm), name='login'),
     url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', users_views.register, name='register'),
+
+    url(r'^search/$', pins_views.search, name='search'),
 
     url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
     url(r'^$', users_views.feed, name='home'),
