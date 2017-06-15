@@ -22,12 +22,14 @@ from django.contrib.auth import views as auth_views
 from pins import views as pins_views
 from users import views as users_views
 
+from users.forms import LoginForm
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pin/', include('pins.urls', namespace="pins")),
     url(r'^categories/', include('categories.urls', namespace="categories")),
 
-    url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
+    url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True, authentication_form=LoginForm), name='login'),
     url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', users_views.register, name='register'),
 

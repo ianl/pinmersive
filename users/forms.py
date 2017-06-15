@@ -1,7 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.utils.text import capfirst
 
+# Users
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(max_length=75)
     first_name = forms.CharField(max_length=30)
@@ -34,3 +37,27 @@ class NewUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
+
+# Auths
+class LoginForm(AuthenticationForm):
+
+    def __init__(self, request=None, *args, **kwargs):
+        self.request = request
+        self.user_cache = None
+        super(AuthenticationForm, self).__init__(*args, **kwargs)
+
+        # Set the label for the "username" field.
+        UserModel = get_user_model()
+        self.username_field = UserModel._meta.get_field(UserModel.USERNAME_FIELD)
+        if self.fields['username'].label is None:
+            self.fields['username'].label = capfirst(self.username_field.verbose_name)
+
+        self.error_messages['invalid_login'] = (
+            "Please enter a correct %(username)s and password. "
+            "Note that the password field is case-sensitive."
+        )
+
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        data = data.lower()
+        return data

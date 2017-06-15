@@ -88,5 +88,6 @@ def register(request):
             return redirect('home')
     else:
         form = NewUserForm()
-        
+
     return render(request, 'registration/register.html', {'form': form})
+    
