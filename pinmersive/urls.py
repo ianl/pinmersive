@@ -33,7 +33,7 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', users_views.register, name='register'),
 
-    url(r'^search/$', pins_views.search, name='search'),
+    url(r'^search/pins/$', pins_views.search, name='search'),
 
     url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
     url(r'^$', users_views.feed, name='home'),

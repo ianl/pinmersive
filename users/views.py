@@ -15,7 +15,7 @@ from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm
 # Create your views here.
 @login_required
 def feed(request):
-    feed = Pin.objects.filter(board__secret=False)
+    feed = Pin.objects.filter(board__secret=False).distinct()
     return render(request, 'pins/index.html', {'pins': feed})
 
 def boards(request, username):

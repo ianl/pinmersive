@@ -93,13 +93,16 @@ def save(request, id):
     return redirect(reverse('pins:show', kwargs={'id': pin.id}))
 
 def search(request):
-    query = request.GET['query']
+    query = request.GET['q']
+
     query_list = query.split()
-    pins = Pin.objects.filter(board__secret=False)
+    list(set(query_list))
+    pins = Pin.objects.filter(board__secret=False).distinct()
 
     result = []
     for q in query_list:
         for pin in pins.filter(Q(description__icontains=q) | Q(board__name__icontains=q) | Q(board__description__icontains=q) | Q(board__category__name__icontains=q)):
-            result.append(pin)
+            if pin not in result:
+                result.append(pin)
 
     return render(request, 'pins/index.html', {'pins': result})
