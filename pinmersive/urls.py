@@ -27,8 +27,9 @@ urlpatterns = [
     url(r'^pin/', include('pins.urls', namespace="pins")),
     url(r'^categories/', include('categories.urls', namespace="categories")),
 
+    url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^register$', users_views.register, name='register'),
+    url(r'^register/$', users_views.register, name='register'),
 
     url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
     url(r'^$', pins_views.index, name='home'),
