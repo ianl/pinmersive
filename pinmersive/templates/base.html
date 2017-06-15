@@ -7,17 +7,39 @@
 </head>
 <body>
     <div class="navbar">
+
         <div class="logo">
             <a href="{% url 'home' %}">
                 <img src="{% static 'images/pinterest-logo.png' %}" alt="" height="50" width="50">
             </a>
         </div>
 
-        <div class="categoriesMenu">
-            <form action="{% url 'categories:categories' %}">
-                <input type="submit" value="Categories">
-            </form>
-        </div>
+        {% if user.is_authenticated %}
+            <div class="categoriesMenu">
+                <form action="{% url 'categories:categories' %}">
+                    <input type="submit" value="Categories">
+                </form>
+            </div>
+
+            <div class="userProfileButton">
+                <form action="{% url 'users:user' user.username %}">
+                    <input type="submit" value="Saved">
+                </form>
+            </div>
+        {% else %}
+            <div class="signUpButton">
+                <form action="">
+                    <input type="submit" value="Sign up">
+                </form>
+            </div>
+
+            <div class="loginButton">
+                <form action="{% url 'login' %}">
+                    <input type="submit" value="Log in">
+                </form>
+            </div>
+        {% endif %}
+
     </div>
 
     {% block content %}

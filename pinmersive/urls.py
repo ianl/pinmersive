@@ -24,9 +24,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pin/', include('pins.urls', namespace="pins")),
     url(r'^categories/', include('categories.urls', namespace="categories")),
-    
-    url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
 
+    url('^', include('django.contrib.auth.urls')),
+
+    url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
     url(r'^$', pins_views.index, name='home'),
 ]
 
