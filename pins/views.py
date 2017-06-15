@@ -12,12 +12,6 @@ from urllib.parse import urlparse
 
 # Create your views here.
 @login_required
-def index(request):
-    pins = Pin.objects.filter(board__secret=False)
-
-    return render(request, 'pins/index.html', {'pins': pins})
-
-@login_required
 def show(request, id):
     pin = get_object_or_404(Pin, id=id)
 

@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
-from pins import views as pins_views
 from users import views as users_views
 
 from users.forms import LoginForm
@@ -34,7 +33,7 @@ urlpatterns = [
     url(r'^register/$', users_views.register, name='register'),
 
     url(r'^(?P<username>\w+)/', include('users.urls', namespace="users")),
-    url(r'^$', pins_views.index, name='home'),
+    url(r'^$', users_views.feed, name='home'),
 ]
 
 if settings.DEBUG:
