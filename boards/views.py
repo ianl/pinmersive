@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .models import Board
 from pins.models import Pin
@@ -28,6 +29,7 @@ def show(request, username, board_name):
         }
     )
 
+@login_required
 def create(request, username):
     user = get_object_or_404(User, username=username)
 
@@ -41,6 +43,7 @@ def create(request, username):
 
     return redirect(reverse('users:boards', kwargs={'username': username})) 
 
+@login_required
 def edit(request, username, board_name):
     user_profile = get_object_or_404(User, username=username).user_profile
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
@@ -52,6 +55,7 @@ def edit(request, username, board_name):
 
     return render(request, 'boards/edit.html', {'board': board, 'form': form})
 
+@login_required
 def update(request, username, board_name):
     user_profile = get_object_or_404(User, username=username).user_profile
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
@@ -64,6 +68,7 @@ def update(request, username, board_name):
 
     return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name}))
 
+@login_required
 def destroy(request, username, board_name):
     user_profile = get_object_or_404(User, username=username).user_profile
     board = get_object_or_404(user_profile.boards, name=board_name.lower())
@@ -85,6 +90,7 @@ def followers(request, username, board_name):
 
     return render(request, 'boards/followers.html', {'board': board})
 
+@login_required
 def follow(request, username, board_name):
     if request.method == 'POST':
         if username != request.user.username:
@@ -100,6 +106,7 @@ def follow(request, username, board_name):
 
     return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board_name}))
 
+@login_required
 def unfollow(request, username, board_name):
     if request.method == 'POST':
         if username != request.user.username:

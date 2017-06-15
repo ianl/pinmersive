@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .models import Pin
 from categories.models import Category
@@ -10,11 +11,13 @@ from .forms import NewPinForm, EditPinForm, NewPinFromPinForm
 from urllib.parse import urlparse
 
 # Create your views here.
+@login_required
 def index(request):
     pins = Pin.objects.filter(board__secret=False)
 
     return render(request, 'pins/index.html', {'pins': pins})
 
+@login_required
 def show(request, id):
     pin = get_object_or_404(Pin, id=id)
 
@@ -26,6 +29,7 @@ def show(request, id):
 
     return render(request, 'pins/show.html', {'pin': pin, 'netloc': parsed.netloc, 'save_pin_form': save_pin_form})
 
+@login_required
 def create(request, username):
     user = get_object_or_404(User, username=username)
 
@@ -42,6 +46,7 @@ def create(request, username):
         })
     )
 
+@login_required
 def edit(request, id):
     pin = get_object_or_404(Pin, id=id)
 
@@ -52,6 +57,7 @@ def edit(request, id):
 
     return render(request, 'pins/edit.html', {'pin': pin, 'form': form})
 
+@login_required
 def update(request, id):
     pin = get_object_or_404(Pin, id=id)
 
@@ -63,6 +69,7 @@ def update(request, id):
 
     return redirect(reverse('pins:show', kwargs={'id': id}))
 
+@login_required
 def destroy(request, id):
     pin = get_object_or_404(Pin, id=id)
     board = pin.board
@@ -74,6 +81,7 @@ def destroy(request, id):
 
     return redirect(reverse('users:boards:show', kwargs={'username': board.user_profile.user.username, 'board_name': board.name})) 
 
+@login_required
 def save(request, id):
     pin = get_object_or_404(Pin, id=id)
 

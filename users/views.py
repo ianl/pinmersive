@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .models import UserProfile
 from pins.models import Pin
@@ -54,6 +55,7 @@ def followers(request, username):
 
     return render(request, 'users/followers.html', {'user_profile': user_profile})
 
+@login_required
 def follow(request, username):
     if request.method == 'POST':
         if username != request.user.username:
@@ -64,6 +66,7 @@ def follow(request, username):
 
     return redirect(reverse('users:user', kwargs={'username': username}))
 
+@login_required
 def unfollow(request, username):
     if request.method == 'POST':
         if username != request.user.username:
@@ -77,17 +80,20 @@ def unfollow(request, username):
 
 # Auths
 def register(request):
-    if request.method == 'POST':
-        form = NewUserForm(request.POST)
-
-        if form.is_valid():
-            user = form.save()
-            UserProfile.objects.create(user=user)
-
-            login(request, user)
-            return redirect('home')
+    if request.user.is_authenticated():
+        return redirect('home')
     else:
-        form = NewUserForm()
+        if request.method == 'POST':
+            form = NewUserForm(request.POST)
 
-    return render(request, 'registration/register.html', {'form': form})
+            if form.is_valid():
+                user = form.save()
+                UserProfile.objects.create(user=user)
+
+                login(request, user)
+                return redirect('home')
+        else:
+            form = NewUserForm()
+
+        return render(request, 'registration/register.html', {'form': form})
     
