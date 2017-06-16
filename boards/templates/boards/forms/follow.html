@@ -1,0 +1,6 @@
+<div class="boards-follow-form">
+    <form action="{% url 'users:boards:follow' username board_name %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Follow board">
+    </form>    
+</div>

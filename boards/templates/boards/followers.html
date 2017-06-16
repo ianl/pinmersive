@@ -3,8 +3,10 @@
 {% load static %}
 
 {% block content %}
-    <div class="followersPage">
-        <div class="followersHeader">
+    <div class="boards-followers-container">
+
+        <div class="boards-followers-header">
+
             <h1>
                 Followers •
                 {% blocktrans count counter=board.followers|length %}
@@ -13,35 +15,35 @@
                     {{ counter }} Followers
                 {% endblocktrans %}
             </h1>
+
         </div>
 
-        <div class="followersContent">
+        <div class="boards-followers-content">
+
             {% for follower in board.followers %}
-                <div class="followersWrapper">
+                <div class="boards-followers-wrapper">
+
                     <a href="{% url 'users:user' follower.user.username %}">
-                        <div class="userProfileAvatar">
-                            {% if follower.avatar %}
-                                <img src="{{ follower.avatar.url }}" alt="" height="168" width="168">
-                            {% else %}
-                                <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                            {% endif %}
+                        <div class="user-profile-avatar">
+                        {% if follower.avatar %}
+                            <img src="{{ follower.avatar.url }}" alt="" height="168" width="168">
+                        {% else %}
+                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                        {% endif %}
                         </div>
 
                         <h3>{{ follower.user.get_full_name }}</h3>
                     </a>
-                    {% if user != follower.user %}
-                        <form action="{% url 'users:follow' follower.user.username %}" method="POST">
-                            {% csrf_token %}
-                            <input type="submit" value="Follow">
-                        </form>
 
-                        <form action="{% url 'users:unfollow' follower.user.username %}" method="POST">
-                            {% csrf_token %}
-                            <input type="submit" value="Unfollow">
-                        </form>
-                    {% endif %}
+                {% if user != follower.user %}
+                    {% include 'users/forms/follow.html' with username=follower.user.username %}
+                    {% include 'users/forms/unfollow.html' with username=follower.user.username %}
+                {% endif %}
+
                 </div>
             {% endfor %}
+
         </div>
+
     </div>
 {% endblock %}

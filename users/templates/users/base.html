@@ -3,30 +3,19 @@
 {% load static %}
 
 {% block content %}
-    <div class="userProfilePage">
+    <div class="user-profile-container">
 
-        <div class="userProfileHeader">
-            {% if user != user_profile.user %}
-                <form action="{% url 'users:follow' user_profile.user.username %}" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" value="Follow">
-                </form>
-
-                <form action="{% url 'users:unfollow' user_profile.user.username %}" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" value="Unfollow">
-                </form>
-            {% endif %}
+        <div class="user-profile-header">
+        {% if user != user_profile.user %}
+            {% include 'users/forms/follow.html' with username=user_profile.user.username %}
+            {% include 'users/forms/unfollow.html' with username=user_profile.user.username %}
+        {% endif %}
 
             <h1>{{ user_profile.user.get_full_name }}</h1>
-            {% if user.is_authenticated %}
-                <div class="logoutButton">
-                    <form action="{% url 'logout' %}" method="POST">
-                        {% csrf_token %}
-                        <input type="submit" value="Log out">
-                    </form>
-                </div>
-            {% endif %}
+
+        {% if user.is_authenticated and user == user_profile.user %}
+            {% include 'registration/forms/logout.html' %}
+        {% endif %}
 
             <a href="{% url 'users:followers' user_profile.user.username %}">
                 {% blocktrans count counter=user_profile.followers|length %}
@@ -39,7 +28,7 @@
                 <p><b>{{ user_profile.follows_users.count }}</b> Following</p>
             </a>
 
-            <div class="userProfileAvatar">
+            <div class="user-profile-avatar">
                 {% if user_profile.avatar %}
                     <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
                 {% else %}
@@ -55,8 +44,8 @@
             </form>  
         </div>
 
-        <div class="userProfileContent">
-            {% block userProfileContent %}
+        <div class="user-profile-content">
+            {% block user_profile_content %}
             {% endblock %}
         </div>
         

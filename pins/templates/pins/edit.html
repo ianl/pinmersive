@@ -2,20 +2,13 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="pinEditWrapper">
+
+    <div class="pins-edit-container">
 
         <h1>Edit this Pin</h1>
-
-        <form action="{% url 'pins:update' pin.id %}" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
-        </form>
-
-        <form action="{% url 'pins:destroy' pin.id %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="Delete Pin" onclick="return confirm('Are you sure? Once you delete a Pin, you can\'t undo it!')">
-        </form>
+        {% include 'pins/forms/update.html' with pin=pin %}
+        {% include 'pins/forms/destroy.html' with pin=pin %}
 
     </div>
+    
 {% endblock %}

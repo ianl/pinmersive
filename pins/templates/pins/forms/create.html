@@ -1,0 +1,17 @@
+<div class="pins-create-form">
+    <h1>Save Pin</h1>
+
+    <h2>Save from the web</h2>
+    <form action="{% url 'users:pins_create' username %}" method="POST">
+        {% csrf_token %}
+        {{ pin_from_web_form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+
+    <h2>Save from your device</h2>
+    <form action="{% url 'users:pins_create' username %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ pin_from_device_form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+</div>

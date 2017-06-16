@@ -1,37 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="pinWrapper">
+    <div class="pin-container">
 
+        <div class="pin-header">
         {% if pin.board.user_profile.user == user %}
-            <div class="pinEdit">
+            <div class="pins-edit-button">
                 <form action="{% url 'pins:edit' pin.id %}" method="GET">
-                    {% csrf_token %}
                     <input type="submit" value="Edit">
                 </form>
             </div>
         {% endif %}
 
-        <div class="pinSave">
-            <form action="{% url 'pins:save' pin.id %}" method="POST">
-                {% csrf_token %}
-                {{ save_pin_form.as_p }}
-                <input type="submit" value="Save">
-            </form>
+            {% include 'pins/forms/save.html' with pin=pin %} 
         </div>
 
-        <div class="pinContent">
+        <div class="pin-content">
             <a href="{{ pin.image_url }}" target="_blank">
                 <img src="/media/{{ pin.image_file }}" alt="">
             </a>
-            <p>Saved from <a href="{{ pin.image_url }}">{{ netloc }}</a></p> 
+
+            <p>Saved from <a href="{{ pin.image_url }}">{{ netloc }}</a></p>
+
             <form action="{{ pin.image_url }}" target="_blank">
                 <input type="submit" value="Visit">
             </form>
+
             <p>
                 <a href="{% url 'users:user' pin.board.user_profile.user.username %}">{{ pin.board.user_profile.user.username }}</a> saved to
                 <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}"> {{ pin.board.name }}</a>
             </p> 
+            
             <p>{{ pin.description }}</p>  
         </div>
         

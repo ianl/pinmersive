@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{{ category.name }}</h1>
+    <div class="category-container">
 
-    <div class="pins">
-        {% for pin in pins %}
-            <div class="pin">
-                <a class="pinLink" href="{% url 'pins:show' pin.id %}">
-                    <img src="/media/{{ pin.image_file }}" alt="">
-                </a> 
-            </div>
-        {% endfor %}
+        <h1>{{ category.name }}</h1>
+
+        <div class="pins-container">
+            {% for pin in pins %}
+                <div class="pin-wrapper">
+                    <a class="pinLink" href="{% url 'pins:show' pin.id %}">
+                        <img src="/media/{{ pin.image_file }}" alt="">
+                    </a> 
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
 {% endblock %}

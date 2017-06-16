@@ -2,16 +2,13 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="boardEdit">
-        <form action="{% url 'users:boards:update' board.user_profile.user.username board.name %}" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
-        </form>
 
-        <form action="{% url 'users:boards:destroy' board.user_profile.user.username board.name %}" method="POST">
-            {% csrf_token %}
-            <input type="submit" value="Delete board" onclick="return confirm('Are you sure? Once you delete a board and all its Pins, you can\'t undo it!')">
-        </form>
+    <div class="boards-edit-container">
+
+        <h1>Edit your board: {{ board.name }}</h1>
+        {% include 'boards/forms/update.html' with username=board.user_profile.user.username board_name=board.name %}
+        {% include 'boards/forms/destroy.html' with username=board.user_profile.user.username board_name=board.name %}
+
     </div>
+
 {% endblock %}
