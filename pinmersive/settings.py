@@ -32,11 +32,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'relationships.apps.RelationshipsConfig',
-    'categories.apps.CategoriesConfig',
-    'boards.apps.BoardsConfig',
-    'pins.apps.PinsConfig',
     'users.apps.UsersConfig',
+    'pins.apps.PinsConfig',
+    'boards.apps.BoardsConfig',
+    'categories.apps.CategoriesConfig',
+    'relationships.apps.RelationshipsConfig',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
