@@ -1,6 +1,6 @@
 <div class="registration-logout-form">
     <form action="{% url 'logout' %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Log out">
+        <input type="submit" class="form-control" value="Log out">
     </form>
 </div>

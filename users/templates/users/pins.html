@@ -3,16 +3,21 @@
 
 {% block user_profile_content %}
     <div class="user-profile-pins-container">
+        
+        <div class="row text-center">
+            {% blocktrans count counter=pins|length %}
+                <p><b>{{ counter }}</b> Pin</p>
+            {% plural %}
+                <p><b>{{ counter }}</b> Pins</p>
+            {% endblocktrans %}
+            <hr> 
+        </div>
 
         {% if user == user_profile.user %}
             {% include 'pins/forms/create.html' with username=user_profile.user.username %}
-        {% endif %}
 
-        {% blocktrans count counter=pins|length %}
-            <p><b>{{ counter }}</b> Pin</p>
-        {% plural %}
-            <p><b>{{ counter }}</b> Pins</p>
-        {% endblocktrans %}
+            <hr>
+        {% endif %}
 
         {% for pin in pins %}
             <div class="pin-wrapper">

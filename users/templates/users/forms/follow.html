@@ -1,6 +1,6 @@
 <div class="users-follow-form">
-    <form action="{% url 'users:follow' username %}" method="POST">
+    <form class="form-inline" action="{% url 'users:follow' username %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Follow">
+        <input type="submit" class="form-control" value="Follow">
     </form>   
 </div>

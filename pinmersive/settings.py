@@ -72,6 +72,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'simple_tags': 'pinmersive.templatetags.simple_tags',
+            },
         },
     },
 ]

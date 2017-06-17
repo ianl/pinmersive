@@ -1,0 +1,26 @@
+body { 
+    padding-top: 70px;
+}
+
+body > forms-g {
+    padding-top: 100px;
+}
+
+.navbar-brand {
+    padding-top: 0;
+}
+
+@media (min-width: 768px) {
+.my-custom-container{
+    width:600px;
+}}
+
+@media (min-width: 992px) {
+.my-custom-container{
+    width:720px;
+}}
+
+@media (min-width: 1200px) {
+.my-custom-container{
+    width:900px;
+}}

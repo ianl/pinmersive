@@ -3,74 +3,84 @@
 
 {% block user_profile_content %}
     <div class="user-profile-boards-container">
-        
+    
     {% if user == user_profile.user %}
-        {% include 'boards/forms/create.html' with username=user_profile.user.username %}
-    {% endif %}
-
-        <div class="public-boards-container">
-
-            {% for board in public_boards %}
-                <div class="board-wrapper">
-
-                    <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
-                        {% for pin in board.pins.all %}
-                            <div class="pin">
-                                <img src="/media/{{ pin.image_file }}" alt="">
-                            </div>
-                        {% endfor %}
-                        
-                        <h2>{{ board.name }}</h2>
-
-                        {% blocktrans count counter=board.pins.count %}
-                            <p><b>{{ counter }}</b> Pin</p>
-                        {% plural %}
-                            <p><b>{{ counter }}</b> Pins</p>
-                        {% endblocktrans %}
-                    </a>
-                    
-                {% if user != user_profile.user %}
-
-                    {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
-
-                    {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
-
-                {% endif %}
-
-                </div>
-            {% endfor %}
-
+        <div class="row">
+        {% include 'boards/forms/create.html' with username=user_profile.user.username %}    
         </div>
 
-    {% if user == user_profile.user %}
-        <div class="secret-boards-container">
+        <hr>
+    {% endif %} 
+        
+        <div class="row">
+            <div class="public-boards-container">
+                {% for board in public_boards %}
+                    <div class="board-wrapper">
 
-            <h2>Secret boards</h2>
+                        <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
+                            {% for pin in board.pins.all %}
+                                <div class="pin">
+                                    <img src="/media/{{ pin.image_file }}" alt="">
+                                </div>
+                            {% endfor %}
+                            
+                            <h2>{{ board.name }}</h2>
 
-            <p>Only you (and people you invite) can see these boards.</p>
-
-            {% for board in secret_boards %}
-                <div class="board-wrapper">
-
-                    <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
-                        {% for pin in board.pins.all %}
-                            <div class="pin">
-                                <img src="/media/{{ pin.image_file }}" alt="">
-                            </div>
-                        {% endfor %}
+                            {% blocktrans count counter=board.pins.count %}
+                                <p><b>{{ counter }}</b> Pin</p>
+                            {% plural %}
+                                <p><b>{{ counter }}</b> Pins</p>
+                            {% endblocktrans %}
+                        </a>
                         
-                        <h2>{{ board.name }}</h2>
+                    {% if user != user_profile.user %}
 
-                        {% blocktrans count counter=board.pins.count %}
-                            <p><b>{{ counter }}</b> Pin</p>
-                        {% plural %}
-                            <p><b>{{ counter }}</b> Pins</p>
-                        {% endblocktrans %}
-                    </a>
+                        {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
 
-                </div>
-            {% endfor %}
+                        {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
 
+                    {% endif %}
+
+                    </div>
+                {% endfor %}
+
+            </div>            
+        </div>
+
+        
+        <hr>
+
+    {% if user == user_profile.user %}
+        <div class="row">
+            <div class="secret-boards-container">
+
+                <h1><span class="label label-default"><span class="glyphicon glyphicon-lock"></span> Secret Boards</span></h1>
+
+                <p>Only you (and people you invite) can see these boards.</p>
+
+                {% for board in secret_boards %}
+                    <div class="board-wrapper">
+
+                        <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
+                            {% for pin in board.pins.all %}
+                                <div class="pin">
+                                    <img src="/media/{{ pin.image_file }}" alt="">
+                                </div>
+                            {% endfor %}
+                            
+                            <h2>{{ board.name }}</h2>
+
+                            {% blocktrans count counter=board.pins.count %}
+                                <p><b>{{ counter }}</b> Pin</p>
+                            {% plural %}
+                                <p><b>{{ counter }}</b> Pins</p>
+                            {% endblocktrans %}
+                        </a>
+
+                    </div>
+                {% endfor %}
+
+            </div>            
         </div>
     {% endif %}
         

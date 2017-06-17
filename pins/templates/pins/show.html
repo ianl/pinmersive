@@ -1,37 +1,60 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="pin-container">
 
         <div class="pin-header">
-        {% if pin.board.user_profile.user == user %}
-            <div class="pins-edit-button">
-                <form action="{% url 'pins:edit' pin.id %}" method="GET">
-                    <input type="submit" value="Edit">
-                </form>
-            </div>
-        {% endif %}
+            <div class="row">
+                {% if pin.board.user_profile.user == user %}
+                    <a class="btn btn-default navbar-btn" href="{% url 'pins:edit' pin.id %}">Edit</a>
+                {% endif %}
 
-            {% include 'pins/forms/save.html' with pin=pin %} 
+                {% include 'pins/forms/save.html' with pin=pin %}
+
+                <hr>                 
+            </div>
+
         </div>
 
         <div class="pin-content">
-            <a href="{{ pin.image_url }}" target="_blank">
-                <img src="/media/{{ pin.image_file }}" alt="">
-            </a>
-
-            <p>Saved from <a href="{{ pin.image_url }}">{{ netloc }}</a></p>
-
-            <form action="{{ pin.image_url }}" target="_blank">
-                <input type="submit" value="Visit">
-            </form>
-
-            <p>
-                <a href="{% url 'users:user' pin.board.user_profile.user.username %}">{{ pin.board.user_profile.user.username }}</a> saved to
-                <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}"> {{ pin.board.name }}</a>
-            </p> 
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ pin.image_url }}" target="_blank">
+                        <img src="/media/{{ pin.image_file }}" alt="">
+                    </a>     
+                </div>          
+            </div>
             
-            <p>{{ pin.description }}</p>  
+            <div class="row">
+                <div class="col-md-11">
+                    <p>Saved from <a href="{{ pin.image_url }}">{{ netloc }}</a></p>    
+                </div>
+                
+                <div class="col-md-1">
+                    <a class="btn btn-default navbar-btn" href="{{ pin.image_url }}" target="_blank">Visit</a>     
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-1">
+                    <a href="{% url 'users:user' pin.board.user_profile.user.username %}">
+                        {% if pin.board.user_profile.avatar %}
+                            <img src="{{ pin.board.user_profile.avatar.url }}" alt="" height="60" width="60">
+                        {% else %}
+                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="60" width="60">
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="col-md-11">
+                    <p>
+                        <a href="{% url 'users:user' pin.board.user_profile.user.username %}">{{ pin.board.user_profile.user.username }}</a> saved to
+                        <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}"> {{ pin.board.name }}</a>
+                    </p>
+                    <p>{{ pin.description }}</p>                      
+                </div>
+            </div>
         </div>
         
     </div>

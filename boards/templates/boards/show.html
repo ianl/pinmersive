@@ -6,54 +6,75 @@
     <div class="board-container">
 
         <div class="board-header">
-        {% if user != board.user_profile.user %}
-
-            {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
-
-            {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
-
-        {% else %}
-            <div class="boards-edit-button">
-                <form action="{% url 'users:boards:edit' board.user_profile.user.username board.name %}" method="GET">
-                    <input type="submit" value="Edit board">
-                </form>  
+            <div class="row">
+            {% if user != board.user_profile.user %}
+                <div class="col-md-2">
+                    {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}    
+                </div>
+                
+                <div class="col-md-10">
+                    {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}    
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <a class="btn btn-default navbar-btn" href="{% url 'users:boards:edit' board.user_profile.user.username board.name %}">Edit board</a>    
+                </div>
+            {% endif %}    
             </div>
-        {% endif %}
+
         </div>
 
         <div class="board-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>
+                        {% if board.secret %}
+                            <span class="glyphicon glyphicon-lock"></span>
+                        {% endif %}
+                        {{ board.name }}
+                    </h1>     
+                </div> 
+            </div>
+            
+            <div class="row">
+                <div class="col-md-10">
+                    {% blocktrans count counter=board.pins.count %}
+                        <p><b>{{ counter }}</b> Pin</p>
+                    {% plural %}
+                        <p><b>{{ counter }}</b> Pins</p>
+                    {% endblocktrans %}
 
-            <h1>{{ board.name }}</h1>
+                    <a href="{% url 'users:boards:followers' board.user_profile.user.username board.name %}">
+                        {% blocktrans count counter=board.followers|length %}
+                            <p><b>{{ counter }}</b> Follower</p>
+                        {% plural %}
+                            <p><b>{{ counter }}</b> Followers</p>
+                        {% endblocktrans %}
+                    </a>
 
-            {% blocktrans count counter=board.pins.count %}
-                <p><b>{{ counter }}</b> Pin</p>
-            {% plural %}
-                <p><b>{{ counter }}</b> Pins</p>
-            {% endblocktrans %}
-
-            <a href="{% url 'users:boards:followers' board.user_profile.user.username board.name %}">
-                {% blocktrans count counter=board.followers|length %}
-                    <p><b>{{ counter }}</b> Follower</p>
-                {% plural %}
-                    <p><b>{{ counter }}</b> Followers</p>
-                {% endblocktrans %}
-            </a>
-
-            <div class="user-profile-avatar">
-                <a href="{% url 'users:user' board.user_profile.user.username %}">
-                    {% if board.user_profile.avatar %}
-                        <img src="{{ board.user_profile.avatar.url }}" alt="" height="60" width="60">
-                    {% else %}
-                        <img src="{% static 'images/default-avatar.png' %}" alt="" height="60" width="60">
-                    {% endif %}
-                </a>
+                    <p>{{ board.description }}</p>                
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="user-profile-avatar">
+                        <a href="{% url 'users:user' board.user_profile.user.username %}">
+                            {% if board.user_profile.avatar %}
+                                <img src="{{ board.user_profile.avatar.url }}" alt="" height="60" width="60">
+                            {% else %}
+                                <img src="{% static 'images/default-avatar.png' %}" alt="" height="60" width="60">
+                            {% endif %}
+                        </a>
+                    </div>   
+                </div>
             </div>
 
-            <p>{{ board.description }}</p>
+            <hr>
 
             <div class="pins-container">
             {% if user == board.user_profile.user %}
                 {% include 'pins/forms/create.html' with username=board.user_profile.user.username %}
+
+                <hr>
             {% endif %}
 
                 {% for pin in board.pins.all %}

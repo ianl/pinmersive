@@ -1,8 +1,10 @@
+{% load bootstrap3 %}
+
 <div class="boards-create-form">
     <h1>Create board</h1>
     <form action="{% url 'users:boards_create' username %}" method="POST">
         {% csrf_token %}
-        {{ board_form.as_p }}
-        <input type="submit" value="Create">
+        {% bootstrap_form board_form %}
+        <input type="submit" class="form-control" value="Create">
     </form>
 </div>

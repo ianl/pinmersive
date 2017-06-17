@@ -6,41 +6,54 @@
     <div class="boards-followers-container">
 
         <div class="boards-followers-header">
-
-            <h1>
-                Followers •
-                {% blocktrans count counter=board.followers|length %}
-                    {{ counter }} Follower
-                {% plural %}
-                    {{ counter }} Followers
-                {% endblocktrans %}
-            </h1>
-
+            <div class="page-header">
+                <h1>
+                    Followers •
+                    {% blocktrans count counter=board.followers|length %}
+                        {{ counter }} Follower
+                    {% plural %}
+                        {{ counter }} Followers
+                    {% endblocktrans %}
+                </h1>   
+            </div>
         </div>
 
         <div class="boards-followers-content">
 
             {% for follower in board.followers %}
-                <div class="boards-followers-wrapper">
+                <div class="row">
+                    <div class="boards-followers-wrapper">
 
-                    <a href="{% url 'users:user' follower.user.username %}">
-                        <div class="user-profile-avatar">
-                        {% if follower.avatar %}
-                            <img src="{{ follower.avatar.url }}" alt="" height="168" width="168">
-                        {% else %}
-                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                        {% endif %}
+                        <a href="{% url 'users:user' follower.user.username %}">
+                            <div class="col-md-4">
+                                <div class="user-profile-avatar">
+                                {% if follower.avatar %}
+                                    <img src="{{ follower.avatar.url }}" alt="" height="168" width="168">
+                                {% else %}
+                                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                                {% endif %}
+                                </div>   
+                            </div>
+
+                            <div class="col-md-5">
+                                <h3>{{ follower.user.get_full_name }}</h3>    
+                            </div>
+                        </a>
+                        
+                        <div class="col-md-3">
+                        {% if user != follower.user %}
+                            <div class="col-md-6">
+                                {% include 'users/forms/follow.html' with username=follower.user.username %}    
+                            </div>
+                            <div class="col-md-6">
+                                {% include 'users/forms/unfollow.html' with username=follower.user.username %}    
+                            </div>
+                        {% endif %}    
                         </div>
 
-                        <h3>{{ follower.user.get_full_name }}</h3>
-                    </a>
-
-                {% if user != follower.user %}
-                    {% include 'users/forms/follow.html' with username=follower.user.username %}
-                    {% include 'users/forms/unfollow.html' with username=follower.user.username %}
-                {% endif %}
-
+                    </div>                    
                 </div>
+
             {% endfor %}
 
         </div>

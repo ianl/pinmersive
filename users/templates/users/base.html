@@ -6,45 +6,66 @@
     <div class="user-profile-container">
 
         <div class="user-profile-header">
-        {% if user != user_profile.user %}
-            {% include 'users/forms/follow.html' with username=user_profile.user.username %}
-            {% include 'users/forms/unfollow.html' with username=user_profile.user.username %}
-        {% endif %}
-
-            <h1>{{ user_profile.user.get_full_name }}</h1>
-
-        {% if user.is_authenticated and user == user_profile.user %}
-            {% include 'registration/forms/logout.html' %}
-        {% endif %}
-
-            <a href="{% url 'users:followers' user_profile.user.username %}">
-                {% blocktrans count counter=user_profile.followers|length %}
-                    <p><b>{{ counter }}</b> Follower</p>
-                {% plural %}
-                    <p><b>{{ counter }}</b> Followers</p>
-                {% endblocktrans %}
-            </a>
-            <a href="{% url 'users:following' user_profile.user.username %}">
-                <p><b>{{ user_profile.follows_users.count }}</b> Following</p>
-            </a>
-
-            <div class="user-profile-avatar">
-                {% if user_profile.avatar %}
-                    <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
-                {% else %}
-                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                {% endif %}
+            <div class="row">
+                {% if user != user_profile.user %}
+                    <div class="col-md-1">
+                        {% include 'users/forms/follow.html' with username=user_profile.user.username %}       
+                    </div>
+                                         
+                    <div class="col-md-11">
+                        {% include 'users/forms/unfollow.html' with username=user_profile.user.username %}      
+                    </div>
+                {% endif %}         
             </div>
 
-            <form action="{% url 'users:boards' user_profile.user.username %}">
-                <input type="submit" value="Boards">
-            </form>
-            <form action="{% url 'users:pins' user_profile.user.username %}">
-                <input type="submit" value="Pins">
-            </form>  
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>{{ user_profile.user.get_full_name }}</h1> 
+                </div>
+
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <a href="{% url 'users:followers' user_profile.user.username %}">
+                            {% blocktrans count counter=user_profile.followers|length %}
+                                <p><b>{{ counter }}</b> Follower</p>
+                            {% plural %}
+                                <p><b>{{ counter }}</b> Followers</p>
+                            {% endblocktrans %}
+                        </a>    
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <a href="{% url 'users:following' user_profile.user.username %}">
+                            <p><b>{{ user_profile.follows_users.count }}</b> Following</p>
+                        </a>                    
+                    </div>                    
+                </div>
+
+                <div class="col-md-3">
+                    <div class="user-profile-avatar">
+                        {% if user_profile.avatar %}
+                            <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                        {% else %}
+                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                        {% endif %}
+                    </div>                     
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <a class="btn btn-default navbar-btn" href="{% url 'users:boards' user_profile.user.username %}">Boards</a>    
+                </div>
+                
+                <div class="col-md-1">
+                    <a class="btn btn-default navbar-btn" href="{% url 'users:pins' user_profile.user.username %}">Pins</a>    
+                </div>
+            </div>
         </div>
 
-        <div class="user-profile-content">
+        <hr>
+        
+        <div class="user-profile-content container-fluid">
             {% block user_profile_content %}
             {% endblock %}
         </div>

@@ -6,24 +6,32 @@
     <div class="users-followers-container">
 
         <div class="users-followers-header">
+            <div class="row">
+                <div class="col-md-9">
+                    {% blocktrans count counter=user_profile.followers|length %}
+                        <h1>{{ counter }}</h1>
+                        <p>Follower</p>
+                    {% plural %}
+                        <h1><b>{{ counter }}</b></h1>
+                        <p>Followers</p>
+                    {% endblocktrans %}    
+                </div>
 
-            <div class="user-profile-avatar">
-            {% if user_profile.avatar %}
-                <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
-            {% else %}
-                <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-            {% endif %}
+                <div class="col-md-3">
+                    <div class="user-profile-avatar">
+                        <a href="{% url 'users:user' user_profile.user.username %}">
+                        {% if user_profile.avatar %}
+                            <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                        {% else %}
+                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                        {% endif %}
+                        </a>
+                    </div>    
+                </div>
             </div>
-
-            {% blocktrans count counter=user_profile.followers|length %}
-                <h1><b>{{ counter }}</b></h1>
-                <h2>Follower</h2>
-            {% plural %}
-                <h1><b>{{ counter }}</b></h1>
-                <h2>Followers</h2>
-            {% endblocktrans %}
-
         </div>
+
+        <hr>
 
         <div class="users-followers-content">
 

@@ -1,7 +1,9 @@
+{% load bootstrap3 %}
+
 <div class="pins-save-form">
     <form action="{% url 'pins:save' pin.id %}" method="POST">
         {% csrf_token %}
-        {{ save_pin_form.as_p }}
-        <input type="submit" value="Save">
+        {% bootstrap_form save_pin_form %}
+        <input type="submit" class="form-control" value="Save Pin">
     </form>
 </div>

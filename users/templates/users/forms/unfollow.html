@@ -1,6 +1,6 @@
 <div class="users-unfollow-form">
-    <form action="{% url 'users:unfollow' username %}" method="POST">
+    <form class="form-inline" action="{% url 'users:unfollow' username %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Unfollow">
+        <input type="submit" class="form-control" value="Unfollow">
     </form>    
 </div>
