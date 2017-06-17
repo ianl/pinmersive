@@ -24,3 +24,23 @@ body > forms-g {
 .my-custom-container{
     width:900px;
 }}
+
+.pin-wrapper {
+    width: 236px;
+}
+
+.pin-wrapper > a img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.pin-content {
+    width: 564px;
+}
+
+.pin-content > div a img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
