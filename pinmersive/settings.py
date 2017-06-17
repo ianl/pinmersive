@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap3',
+
     'users.apps.UsersConfig',
     'pins.apps.PinsConfig',
     'boards.apps.BoardsConfig',
