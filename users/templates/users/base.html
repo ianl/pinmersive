@@ -8,11 +8,9 @@
         <div class="user-profile-header">
             <div class="row">
                 {% if user != user_profile.user %}
-                    <div class="col-md-1">
+                    <div class="pull-right">
                         {% include 'users/forms/follow.html' with username=user_profile.user.username %}       
-                    </div>
-                                         
-                    <div class="col-md-11">
+                        
                         {% include 'users/forms/unfollow.html' with username=user_profile.user.username %}      
                     </div>
                 {% endif %}         

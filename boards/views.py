@@ -22,8 +22,14 @@ def show(request, username, board_name):
     pin_from_web_form = NewPinFromWebForm(instance=pin, user=user)
     pin_from_device_form = NewPinFromDeviceForm(instance=pin, user=user)
 
+    if user == request.user:
+        board_edit_form = EditBoardForm(instance=board)
+    else:
+        board_edit_form = EditBoardForm()
+
     return render(request, 'boards/show.html', {
             'board': board, 
+            'board_edit_form': board_edit_form,
             'pin_from_web_form': pin_from_web_form, 
             'pin_from_device_form': pin_from_device_form
         }
@@ -40,6 +46,8 @@ def create(request, username):
             board = form.save(commit=False)
             board.user_profile = request.user.user_profile
             board.save()
+            
+            return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name})) 
 
     return redirect(reverse('users:boards', kwargs={'username': username})) 
 

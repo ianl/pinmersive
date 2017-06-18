@@ -7,14 +7,13 @@
         <div class="pin-header">
             <div class="row">
                 {% if pin.board.user_profile.user == user %}
-                    <a class="btn btn-default navbar-btn" href="{% url 'pins:edit' pin.id %}">Edit</a>
-                {% endif %}
+                    {% include 'pins/modal_forms/edit.html' with form=edit_pin_form %}
+                {% endif %}   
 
-                {% include 'pins/forms/save.html' with pin=pin %}
+                {% include 'pins/modal_forms/save.html' with form=save_pin_form %}  
 
-                <hr>                 
+                <hr>
             </div>
-
         </div>
 
         <div class="pin-content">

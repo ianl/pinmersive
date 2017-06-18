@@ -22,7 +22,18 @@ def show(request, id):
     parsed = urlparse(pin.image_url)
     save_pin_form = NewPinFromPinForm(user=request.user)
 
-    return render(request, 'pins/show.html', {'pin': pin, 'netloc': parsed.netloc, 'save_pin_form': save_pin_form})
+    if pin.board.user_profile.user == request.user:
+        edit_pin_form = EditPinForm(instance=pin, user=request.user)
+    else:
+        edit_pin_form = EditPinForm()
+
+    return render(request, 'pins/show.html', {
+            'pin': pin, 
+            'netloc': parsed.netloc, 
+            'save_pin_form': save_pin_form,
+            'edit_pin_form': edit_pin_form
+        }
+    )
 
 @login_required
 def create(request, username):

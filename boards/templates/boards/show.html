@@ -8,16 +8,14 @@
         <div class="board-header">
             <div class="row">
             {% if user != board.user_profile.user %}
-                <div class="col-md-2">
+                <div class="pull-right">
                     {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}    
-                </div>
-                
-                <div class="col-md-10">
+               
                     {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}    
                 </div>
             {% else %}
                 <div class="col-md-12">
-                    <a class="btn btn-default navbar-btn" href="{% url 'users:boards:edit' board.user_profile.user.username board.name %}">Edit board</a>    
+                    {% include 'boards/modal_forms/edit.html' with form=board_edit_form %}    
                 </div>
             {% endif %}    
             </div>
@@ -72,7 +70,9 @@
 
             <div class="pins-container">
             {% if user == board.user_profile.user %}
-                {% include 'pins/forms/create.html' with username=board.user_profile.user.username %}
+                <h3>Save Pin</h3>
+                {% include 'pins/modal_forms/create_from_web.html' with form=pin_from_web_form %}
+                {% include 'pins/modal_forms/create_from_device.html' with form=pin_from_device_form %}   
 
                 <hr>
             {% endif %}

@@ -6,10 +6,9 @@
     
     {% if user == user_profile.user %}
         <div class="row">
-        {% include 'boards/forms/create.html' with username=user_profile.user.username %}    
+            {% include 'boards/modal_forms/create.html' with form=board_form %}
+            <hr>     
         </div>
-
-        <hr>
     {% endif %} 
         
         <div class="row">

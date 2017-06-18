@@ -1,0 +1,32 @@
+{% load bootstrap3 %}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#pins-create-from-web">
+    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> From The Web
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="pins-create-from-web" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Save from a website</h4>
+            </div>
+
+            <form action="{% url 'users:pins_create' user.username %}" method="POST">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="btn btn-danger" value="Save Pin">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

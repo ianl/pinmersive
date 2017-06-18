@@ -14,18 +14,23 @@
         </div>
 
         {% if user == user_profile.user %}
-            {% include 'pins/forms/create.html' with username=user_profile.user.username %}
+            <div class="row">
+                <h3>Save Pin</h3>
+                {% include 'pins/modal_forms/create_from_web.html' with form=pin_from_web_form %}
+                {% include 'pins/modal_forms/create_from_device.html' with form=pin_from_device_form %}   
 
-            <hr>
+                <hr> 
+            </div>
         {% endif %}
 
-        {% for pin in pins %}
-            <div class="pin-wrapper">
-                <a class="pinLink" href="{% url 'pins:show' pin.id %}">
-                    <img src="/media/{{ pin.image_file }}" alt="">
-                </a> 
-            </div>
-        {% endfor %}
-        
+        <div class="row">
+            {% for pin in pins %}
+                <div class="pin-wrapper">
+                    <a class="pinLink" href="{% url 'pins:show' pin.id %}">
+                        <img src="/media/{{ pin.image_file }}" alt="">
+                    </a> 
+                </div>
+            {% endfor %}    
+        </div>
     </div>
 {% endblock %}
