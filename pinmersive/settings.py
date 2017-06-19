@@ -73,7 +73,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'simple_tags': 'pinmersive.templatetags.simple_tags',
+                'template_tags': 'pinmersive.templatetags.template_tags',
             },
         },
     },

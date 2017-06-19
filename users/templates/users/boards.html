@@ -1,5 +1,6 @@
 {% extends 'users/base.html' %}
 {% load i18n %}
+{% load template_tags %}
 
 {% block user_profile_content %}
     <div class="user-profile-boards-container">
@@ -33,11 +34,11 @@
                         </a>
                         
                     {% if user != user_profile.user %}
-
-                        {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
-
-                        {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
-
+                        {% if not user.user_profile|is_following_board:board %}
+                            {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
+                        {% else %}
+                            {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
+                        {% endif %}
                     {% endif %}
 
                     </div>

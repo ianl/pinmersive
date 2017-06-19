@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load template_tags %}
 
 {% block content %}
     <div class="boards-followers-container">
@@ -40,20 +41,20 @@
                             </div>
                         </a>
                         
-                        <div class="col-md-3">
                         {% if user != follower.user %}
-                            <div class="col-md-6">
-                                {% include 'users/forms/follow.html' with username=follower.user.username %}    
+                            <div class="col-md-3">
+                                <div class="pull-right">
+                                    {% if not user.user_profile|is_following_board:follower %}
+                                        {% include 'users/forms/follow.html' with username=follower.user.username %}    
+                                    {% else %}
+                                        {% include 'users/forms/unfollow.html' with username=follower.user.username %}
+                                    {% endif %}      
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                {% include 'users/forms/unfollow.html' with username=follower.user.username %}    
-                            </div>
-                        {% endif %}    
-                        </div>
-
+                        {% endif %}
+                          
                     </div>                    
                 </div>
-
             {% endfor %}
 
         </div>

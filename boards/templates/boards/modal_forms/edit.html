@@ -30,7 +30,7 @@
             <div class="modal-footer">
                 <form action="{% url 'users:boards:destroy' user.username board.name %}" method="POST">
                     {% csrf_token %}
-                    <input type="submit" class="form-control btn-danger" value="Delete board" onclick="return confirm('Are you sure? Once you delete a board and all its Pins, you can\'t undo it!')">
+                    <input type="submit" class="form-control btn-danger" value="Delete Board" onclick="return confirm('Are you sure? Once you delete a board and all its Pins, you can\'t undo it!')">
                 </form>
             </div>
 

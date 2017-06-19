@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load template_tags %}
 
 {% block content %}
     <div class="board-container">
@@ -9,9 +10,11 @@
             <div class="row">
             {% if user != board.user_profile.user %}
                 <div class="pull-right">
-                    {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}    
-               
-                    {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}    
+                    {% if not user.user_profile|is_following_board:board %}
+                        {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}    
+                    {% else %}
+                        {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}  
+                    {% endif %}  
                 </div>
             {% else %}
                 <div class="col-md-12">

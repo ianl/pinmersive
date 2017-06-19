@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load template_tags %}
 
 {% block content %}
     <div class="users-followers-container">
@@ -51,8 +52,11 @@
                     </a>
 
                 {% if user != follower.user %}
-                    {% include 'users/forms/follow.html' with username=follower.user.username %}
-                    {% include 'users/forms/unfollow.html' with username=follower.user.username %}
+                    {% if not user.user_profile|is_following_user_profile:follower %}
+                        {% include 'users/forms/follow.html' with username=follower.user.username %}
+                    {% else %}
+                        {% include 'users/forms/unfollow.html' with username=follower.user.username %}
+                    {% endif %}
                 {% endif %}
 
                 </div>
