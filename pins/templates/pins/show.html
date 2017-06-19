@@ -2,8 +2,10 @@
 {% load static %}
 
 {% block content %}
-    <div class="pin-container">
+<div class="pin-container">
 
+
+    <div class="container my-custom-container">
         <div class="pin-header">
             <div class="row">
                 {% if pin.board.user_profile.user == user %}
@@ -55,6 +57,7 @@
                 </div>
             </div>
         </div>
-        
     </div>
+
+</div>
 {% endblock %}

@@ -3,52 +3,65 @@
 {% load template_tags %}
 
 {% block user_profile_content %}
-    <div class="user-profile-boards-container">
     
+<div class="container my-custom-container">
+    <div class="row text-center">
+        {% blocktrans count counter=public_boards|length %}
+            <p><b>{{ counter }}</b> Board</p>
+        {% plural %}
+            <p><b>{{ counter }}</b> Boards</p>
+        {% endblocktrans %}
+        <hr> 
+    </div>
+
     {% if user == user_profile.user %}
-        <div class="row">
-            {% include 'boards/modal_forms/create.html' with form=board_form %}
-            <hr>     
+        <div class="container my-custom-container">
+            <div class="row">
+                {% include 'boards/modal_forms/create.html' with form=board_form %}
+                <hr>     
+            </div>
         </div>
     {% endif %} 
+</div>
         
-        <div class="row">
-            <div class="public-boards-container">
-                {% for board in public_boards %}
-                    <div class="board-wrapper">
+<div class="container-fluid">
+    <div class="row">
+        <div class="public-boards-container">
+            {% for board in public_boards %}
+                <div class="board-wrapper">
 
-                        <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
-                            {% for pin in board.pins.all %}
-                                <div class="pin">
-                                    <img src="/media/{{ pin.image_file }}" alt="">
-                                </div>
-                            {% endfor %}
-                            
-                            <h2>{{ board.name }}</h2>
-
-                            {% blocktrans count counter=board.pins.count %}
-                                <p><b>{{ counter }}</b> Pin</p>
-                            {% plural %}
-                                <p><b>{{ counter }}</b> Pins</p>
-                            {% endblocktrans %}
-                        </a>
+                    <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
+                        {% for pin in board.pins.all %}
+                            <div class="pin">
+                                <img src="/media/{{ pin.image_file }}" alt="">
+                            </div>
+                        {% endfor %}
                         
-                    {% if user != user_profile.user %}
-                        {% if not user.user_profile|is_following_board:board %}
-                            {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
-                        {% else %}
-                            {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
-                        {% endif %}
+                        <h2>{{ board.name }}</h2>
+
+                        {% blocktrans count counter=board.pins.count %}
+                            <p><b>{{ counter }}</b> Pin</p>
+                        {% plural %}
+                            <p><b>{{ counter }}</b> Pins</p>
+                        {% endblocktrans %}
+                    </a>
+                    
+                {% if user != user_profile.user %}
+                    {% if not user.user_profile|is_following_board:board %}
+                        {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
+                    {% else %}
+                        {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
                     {% endif %}
+                {% endif %}
 
-                    </div>
-                {% endfor %}
+                </div>
+            {% endfor %}
 
-            </div>            
-        </div>
+        </div>            
+    </div>
 
-        
-        <hr>
+    
+    <hr>
 
     {% if user == user_profile.user %}
         <div class="row">
@@ -83,6 +96,6 @@
             </div>            
         </div>
     {% endif %}
-        
-    </div>
+</div>
+
 {% endblock %}

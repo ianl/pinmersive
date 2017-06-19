@@ -2,21 +2,21 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<div class="register-container">
 
-    <div class="register-container">
-
+    <div class="container my-custom-container">
         <h1 align="center">Welcome to Pinmersive</h1>
         <form action="{% url 'register' %}" method="POST">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <input type="submit" class="form-control" value="Continue">
+            <input type="submit" class="form-control btn-danger" value="Continue">
         </form>
 
         <p>Already a member?</p>
         <form action="{% url 'login' %}">
-            <input type="submit" class="form-control" value="Log in">
+            <input type="submit" class="form-control btn-info" value="Log in">
         </form>
-        
     </div>
 
+</div>
 {% endblock %}

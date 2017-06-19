@@ -2,35 +2,38 @@
 {% load i18n %}
 
 {% block user_profile_content %}
-    <div class="user-profile-pins-container">
-        
-        <div class="row text-center">
-            {% blocktrans count counter=pins|length %}
-                <p><b>{{ counter }}</b> Pin</p>
-            {% plural %}
-                <p><b>{{ counter }}</b> Pins</p>
-            {% endblocktrans %}
+
+<div class="container my-custom-container">
+    <div class="row text-center">
+        {% blocktrans count counter=pins|length %}
+            <p><b>{{ counter }}</b> Pin</p>
+        {% plural %}
+            <p><b>{{ counter }}</b> Pins</p>
+        {% endblocktrans %}
+        <hr> 
+    </div>
+
+    {% if user == user_profile.user %}
+        <div class="row">
+            <h3>Save Pin</h3>
+            {% include 'pins/modal_forms/create_from_web.html' with form=pin_from_web_form %}
+            {% include 'pins/modal_forms/create_from_device.html' with form=pin_from_device_form %}   
+
             <hr> 
         </div>
+    {% endif %}
+</div>
 
-        {% if user == user_profile.user %}
-            <div class="row">
-                <h3>Save Pin</h3>
-                {% include 'pins/modal_forms/create_from_web.html' with form=pin_from_web_form %}
-                {% include 'pins/modal_forms/create_from_device.html' with form=pin_from_device_form %}   
-
-                <hr> 
+<div class="container-fluid">
+    <div class="row">
+        {% for pin in pins %}
+            <div class="pin-wrapper">
+                <a class="pinLink" href="{% url 'pins:show' pin.id %}">
+                    <img src="/media/{{ pin.image_file }}" alt="">
+                </a> 
             </div>
-        {% endif %}
-
-        <div class="row">
-            {% for pin in pins %}
-                <div class="pin-wrapper">
-                    <a class="pinLink" href="{% url 'pins:show' pin.id %}">
-                        <img src="/media/{{ pin.image_file }}" alt="">
-                    </a> 
-                </div>
-            {% endfor %}    
-        </div>
+        {% endfor %}    
     </div>
+</div>
+
 {% endblock %}

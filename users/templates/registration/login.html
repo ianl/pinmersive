@@ -2,23 +2,23 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<div class="login-container">
 
-    <div class="login-container">
-
+    <div class="container my-custom-container">
         <h1 align="center">Log in to see more</h1>
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <input type="submit" class="form-control" value="Log in">
+            <input type="submit" class="form-control btn-info" value="Log in">
         </form>
 
         <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p> 
 
         <p>Need an account?</p>
         <form action="{% url 'register' %}">
-            <input type="submit" class="form-control" value="Sign up">
+            <input type="submit" class="form-control btn-danger" value="Sign up">
         </form>
-        
     </div>
 
+</div>
 {% endblock %}

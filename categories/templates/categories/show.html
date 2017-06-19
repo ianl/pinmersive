@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="category-container">
-        
+<div class="category-container">
+
+    <div class="container my-custom-container">
         <div class="page-header">
             <h1>{{ category.name }}</h1>    
         </div>
-        
+    </div>
+
+    <div class="container-fluid">
         <div class="pins-container">
             {% for pin in pins %}
                 <div class="pin-wrapper">
@@ -16,6 +19,7 @@
                 </div>
             {% endfor %}
         </div>
-
     </div>
+    
+</div>
 {% endblock %}

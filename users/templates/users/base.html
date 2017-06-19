@@ -4,9 +4,11 @@
 {% load template_tags %}
 
 {% block content %}
-    <div class="user-profile-container">
+
+<div class="container my-custom-container">
 
         <div class="user-profile-header">
+
             <div class="row">
                 {% if user != user_profile.user %}
                     <div class="pull-right">
@@ -62,14 +64,16 @@
                     <a class="btn btn-default navbar-btn" href="{% url 'users:pins' user_profile.user.username %}">Pins</a>    
                 </div>
             </div>
+
         </div>
 
         <hr>
-        
-        <div class="user-profile-content container-fluid">
-            {% block user_profile_content %}
-            {% endblock %}
-        </div>
-        
+</div>
+
+    <div class="user-profile-content">
+        {% block user_profile_content %}
+        {% endblock %}
     </div>
+
+
 {% endblock %}
