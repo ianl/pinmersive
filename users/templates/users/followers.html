@@ -35,10 +35,10 @@
 
         <hr>
 
-        <div class="users-followers-content">
+        <div class="users-followers-content grid">
 
             {% for follower in user_profile.followers %}
-                <div class="users-follower-wrapper">
+                <div class="users-follower-wrapper text-center grid-item">
 
                     <a href="{% url 'users:user' follower.user.username %}">
                         <div class="user-profile-avatar">

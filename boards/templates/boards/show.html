@@ -83,9 +83,9 @@
     </div>
 
     <div class="container-fluid">
-        <div class="pins-container">
+        <div class="pins-container grid">
             {% for pin in board.pins.all %}
-                <div class="pin-wrapper">
+                <div class="pin-wrapper grid-item">
                     <a class="pinLink" href="{% url 'pins:show' pin.id %}">
                         <img src="/media/{{ pin.image_file }}" alt="">
                     </a> 

@@ -26,13 +26,15 @@
 
 <div class="container-fluid">
     <div class="row">
-        {% for pin in pins %}
-            <div class="pin-wrapper">
-                <a class="pinLink" href="{% url 'pins:show' pin.id %}">
-                    <img src="/media/{{ pin.image_file }}" alt="">
-                </a> 
-            </div>
-        {% endfor %}    
+        <div class="pins-container grid">
+            {% for pin in pins %}
+                <div class="pin-wrapper grid-item">
+                    <a class="pinLink" href="{% url 'pins:show' pin.id %}">
+                        <img src="/media/{{ pin.image_file }}" alt="">
+                    </a> 
+                </div>
+            {% endfor %}    
+        </div>
     </div>
 </div>
 

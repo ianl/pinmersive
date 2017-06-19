@@ -12,17 +12,17 @@ body > forms-g {
 
 @media (min-width: 768px) {
 .my-custom-container{
-    width:600px;
+    width: 600px;
 }}
 
 @media (min-width: 992px) {
 .my-custom-container{
-    width:720px;
+    width: 720px;
 }}
 
 @media (min-width: 1200px) {
 .my-custom-container{
-    width:900px;
+    width: 800px;
 }}
 
 .pin-wrapper {
@@ -43,4 +43,16 @@ body > forms-g {
     display: block;
     width: 100%;
     height: auto;
+}
+
+.grid {
+    margin: 0 auto;
+}
+
+.grid-item {
+    opacity: 0;
+}
+
+.is-showing-items .grid-item {
+    opacity: 1;
 }

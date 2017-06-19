@@ -30,10 +30,10 @@
 
         <hr>
 
-        <div class="users-following-content">
+        <div class="users-following-content grid">
             {% for following in user_profile.follows_users.all %}
 
-                <div class="users-following-wrapper">
+                <div class="users-following-wrapper text-center grid-item">
 
                     <a href="{% url 'users:user' following.user.username %}">
                         <div class="userProfileAvatar">
