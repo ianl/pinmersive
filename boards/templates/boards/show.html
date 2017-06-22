@@ -87,8 +87,18 @@
 
         {% if user == board.user_profile.user %}
             <h3>Save Pin</h3>
+            
+            <!-- New Pin From Web Modal Trigger Button -->
+            <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#new-pin-from-web-modal">
+                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> From The Web
+            </button>
             {% include 'pins/modal_forms/create_from_web.html' with form=pin_from_web_form %}
-            {% include 'pins/modal_forms/create_from_device.html' with form=pin_from_device_form %}   
+
+            <!-- New Pin From Device Modal Trigger Button -->
+            <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#new-pin-from-device-modal">
+                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> From Your Device
+            </button>
+            {% include 'pins/modal_forms/create_from_device.html' with form=pin_from_device_form %} 
 
             <hr>
         {% endif %}
