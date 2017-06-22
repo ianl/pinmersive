@@ -1,15 +1,10 @@
 {% load bootstrap3 %}
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#save-pin">
-    <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Save
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="save-pin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Pin Save Modal -->
+<div class="modal fade" id="{{ pin.id }}-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
+            
             <form action="{% url 'pins:save' pin.id %}" method="POST">
                 <div class="modal-body">
                     {% csrf_token %}

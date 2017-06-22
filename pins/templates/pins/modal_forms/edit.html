@@ -1,12 +1,7 @@
 {% load bootstrap3 %}
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
-    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Pin Edit Modal -->
+<div class="modal fade" id="{{ pin.id }}-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -18,7 +13,23 @@
             <form action="{% url 'pins:update' pin.id %}" method="POST">
                 <div class="modal-body">
                     {% csrf_token %}
-                    {% bootstrap_form form %}
+                    <div class="form-group">
+                        <label class="control-label" for="id_board">Board</label>
+                        <select name="board" class="form-control" title required id="id_board">
+                            <option value>---------</option>
+                        {% for board in pin.board.user_profile.boards.all %}
+                            {% if board == pin.board %}
+                                <option value="{{ board.id }}" selected>{{ board }}</option>
+                            {% else %}
+                                <option value="{{ board.id }}">{{ board }}</option>
+                            {% endif %}
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="id_description">Description</label>
+                        <input type="text" name="description" value="{{ pin.description }}" maxlength="255" class="form-control" placeholder="Description" title id="id_description">
+                    </div>
                 </div>
 
                 <div class="modal-footer">

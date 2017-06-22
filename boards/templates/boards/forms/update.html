@@ -1,9 +1,0 @@
-{% load bootstrap3 %}
-
-<div class="boards-update-form">
-    <form action="{% url 'users:boards:update' username board_name %}" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" class="form-control" value="Save">
-    </form>    
-</div>

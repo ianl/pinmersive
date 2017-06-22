@@ -52,19 +52,7 @@ def create(request, username):
             
             return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name})) 
 
-    return redirect(reverse('users:boards', kwargs={'username': username})) 
-
-@login_required
-def edit(request, username, board_name):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    board = get_object_or_404(user_profile.boards, name=board_name.lower())
-
-    if user_profile.user == request.user and request.method == 'GET':
-        form = EditBoardForm(instance=board)
-    else:
-        return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name})) 
-
-    return render(request, 'boards/edit.html', {'board': board, 'form': form})
+    return redirect(reverse('users:boards', kwargs={'username': username}))
 
 @login_required
 def update(request, username, board_name):

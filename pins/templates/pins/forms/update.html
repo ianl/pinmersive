@@ -1,9 +1,0 @@
-{% load bootstrap3 %}
-
-<div class="pins-update-form">
-    <form action="{% url 'pins:update' pin.id %}" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" class="form-control" value="Save">
-    </form>
-</div>

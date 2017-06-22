@@ -1,6 +1,0 @@
-<div class="pins-destroy-form">
-    <form action="{% url 'pins:destroy' pin.id %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" class="form-control" value="Delete Pin" onclick="return confirm('Are you sure? Once you delete a Pin, you can\'t undo it!')">
-    </form>    
-</div>

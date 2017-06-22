@@ -19,15 +19,9 @@ def show(request, id):
 
     save_pin_form = NewPinFromPinForm(user=request.user)
 
-    if pin.board.user_profile.user == request.user:
-        edit_pin_form = EditPinForm(instance=pin, user=request.user)
-    else:
-        edit_pin_form = EditPinForm()
-
     return render(request, 'pins/show.html', {
             'pin': pin, 
-            'save_pin_form': save_pin_form,
-            'edit_pin_form': edit_pin_form
+            'save_pin_form': save_pin_form
         }
     )
 
@@ -47,17 +41,6 @@ def create(request, username):
             'board_name': pin.board.name
         })
     )
-
-@login_required
-def edit(request, id):
-    pin = get_object_or_404(Pin, id=id)
-
-    if pin.board.user_profile.user == request.user and request.method == 'GET':
-        form = EditPinForm(instance=pin, user=request.user)
-    else:
-        return redirect(reverse('pins:show', kwargs={'id': id})) 
-
-    return render(request, 'pins/edit.html', {'pin': pin, 'form': form})
 
 @login_required
 def update(request, id):
@@ -112,4 +95,9 @@ def search(request):
             if pin not in result:
                 result.append(pin)
 
-    return render(request, 'pins/index.html', {'pins': result})
+    save_pin_form = NewPinFromPinForm(user=request.user)
+    return render(request, 'pins/index.html', {
+            'pins': result,
+            'save_pin_form': save_pin_form
+        }
+    )
