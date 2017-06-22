@@ -2,10 +2,6 @@ body {
     padding-top: 70px;
 }
 
-body > forms-g {
-    padding-top: 100px;
-}
-
 .navbar-brand {
     padding-top: 0;
 }
@@ -40,6 +36,17 @@ body > forms-g {
 }
 
 .pin-content > div a img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.pin-modal-body {
+    width: 564px;
+    margin: 0 auto;
+}
+
+.pin-modal-body > div a img {
     display: block;
     width: 100%;
     height: auto;

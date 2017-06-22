@@ -9,8 +9,6 @@ from categories.models import Category
 
 from .forms import NewPinForm, EditPinForm, NewPinFromPinForm
 
-from urllib.parse import urlparse
-
 # Create your views here.
 @login_required
 def show(request, id):
@@ -19,7 +17,6 @@ def show(request, id):
     if pin.board.secret and pin.board.user_profile.user != request.user:
         get_object_or_404(Pin, id=None)
 
-    parsed = urlparse(pin.image_url)
     save_pin_form = NewPinFromPinForm(user=request.user)
 
     if pin.board.user_profile.user == request.user:
@@ -29,7 +26,6 @@ def show(request, id):
 
     return render(request, 'pins/show.html', {
             'pin': pin, 
-            'netloc': parsed.netloc, 
             'save_pin_form': save_pin_form,
             'edit_pin_form': edit_pin_form
         }

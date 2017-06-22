@@ -8,7 +8,7 @@ from pins.models import Pin
 from relationships.models import UserFollowsBoard
 
 from .forms import NewBoardForm, EditBoardForm
-from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm
+from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm, NewPinFromPinForm
 
 # Create your views here.
 def show(request, username, board_name):
@@ -27,11 +27,14 @@ def show(request, username, board_name):
     else:
         board_edit_form = EditBoardForm()
 
+    save_pin_form = NewPinFromPinForm(user=request.user)
+
     return render(request, 'boards/show.html', {
             'board': board, 
             'board_edit_form': board_edit_form,
             'pin_from_web_form': pin_from_web_form, 
-            'pin_from_device_form': pin_from_device_form
+            'pin_from_device_form': pin_from_device_form,
+            'save_pin_form': save_pin_form
         }
     )
 

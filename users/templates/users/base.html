@@ -8,18 +8,19 @@
 <div class="container my-custom-container">
 
         <div class="user-profile-header">
-
-            <div class="row">
-                {% if user != user_profile.user %}
-                    <div class="pull-right">
+            {% if user != user_profile.user %}
+                <div class="row">
+                    <div class="col-md-2 pull-right">
                         {% if not user.user_profile|is_following_user_profile:user_profile %}
                             {% include 'users/forms/follow.html' with username=user_profile.user.username %}       
                         {% else %}
                             {% include 'users/forms/unfollow.html' with username=user_profile.user.username %}
                         {% endif %}      
-                    </div>
-                {% endif %}         
-            </div>
+                    </div>         
+                </div>
+
+                <hr>
+            {% endif %}
 
             <div class="row">
                 <div class="col-md-4">

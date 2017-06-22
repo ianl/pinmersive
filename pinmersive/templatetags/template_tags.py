@@ -1,5 +1,7 @@
 from django import template
+
 from categories.models import Category
+from pins.forms import EditPinForm
 
 register = template.Library()
 
@@ -7,7 +9,6 @@ register = template.Library()
 @register.simple_tag
 def get_categories():
     return Category.objects.all()
-
 
 # Filter Tags
 @register.filter

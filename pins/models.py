@@ -5,7 +5,7 @@ from django.core.files.temp import NamedTemporaryFile
 
 import uuid
 from urllib.request import urlopen
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlparse
 
 from .helpers import update_filename
 
@@ -42,3 +42,8 @@ class Pin(models.Model):
 
         self.image_file.save(fname, File(image))
         self.save()
+
+    @property
+    def netloc(self):
+        parsed = urlparse(self.image_url)
+        return parsed.netloc

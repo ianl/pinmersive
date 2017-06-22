@@ -10,13 +10,19 @@ from relationships.models import UserFollowsUser
 
 from .forms import NewUserForm
 from boards.forms import NewBoardForm
-from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm
+from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm, NewPinFromPinForm, EditPinForm
 
 # Create your views here.
 @login_required
 def feed(request):
     feed = Pin.objects.filter(board__secret=False).distinct()
-    return render(request, 'pins/index.html', {'pins': feed})
+    save_pin_form = NewPinFromPinForm(user=request.user)
+
+    return render(request, 'pins/index.html', {
+            'pins': feed,
+            'save_pin_form': save_pin_form
+        }
+    )
 
 def boards(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
@@ -40,12 +46,14 @@ def pins(request, username):
 
     pin_from_web_form = NewPinFromWebForm(user=request.user)
     pin_from_device_form = NewPinFromDeviceForm(user=request.user)
+    save_pin_form = NewPinFromPinForm(user=request.user)
 
     return render(request, 'users/pins.html', {
             'user_profile': user_profile, 
             'pins': pins, 
             'pin_from_web_form': pin_from_web_form, 
-            'pin_from_device_form': pin_from_device_form
+            'pin_from_device_form': pin_from_device_form,
+            'save_pin_form': save_pin_form
         }
     )
 
