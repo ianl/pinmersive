@@ -3,15 +3,7 @@
 {% block content %}
 
     <div class="pins-container grid">
-
-        {% for pin in pins %}
-            <div class="pin-wrapper grid-item">
-                <a href="{% url 'pins:show' pin.id %}">
-                    <img src="/media/{{ pin.image_file }}" alt="">
-                </a>
-            </div>
-        {% endfor %}
-
+        {% include 'pins/partials/pins.html' with pins=pins %}
     </div>
     
 {% endblock %}

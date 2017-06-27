@@ -1,0 +1,30 @@
+{% load static %}
+
+{% for pin in pins %}
+    <div class="pin-wrapper grid-item panel panel-default">
+        
+        <a href="{% url 'pins:show' pin.id %}">
+            <img src="/media/{{ pin.image_file }}" alt="">
+
+            <div class="panel-body">
+                <h5>{{ pin.board.description }}</h5>
+                {% if pin.board.category %}
+                    <p><small>From <b>{{ pin.board.category.name }}</b></small></p>
+                {% else %}
+                    <p><small>From <b>Everything</b></small></p>
+                {% endif %}
+            </div>
+        </a>
+
+        <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}">
+            <div class="panel-footer">
+                <p style="display: inline;"><small>{{ pin.board }}</small></p>
+                {% if pin.board.user_profile.avatar %}
+                    <img src="{{ pin.board.user_profile.avatar.url }}" alt="">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" alt="">
+                {% endif %}   
+            </div>
+        </a>
+    </div>
+{% endfor %}
