@@ -1,24 +1,40 @@
-{% extends 'base.html' %}
+{% extends 'registration/base.html' %}
 {% load bootstrap3 %}
+{% load static %}
+
+{% block children_css %}
+    <link rel="stylesheet" href="{% static 'css/users/registration/login.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="login-container">
+    <div class="login-container">
 
-    <div class="container my-custom-container">
-        <h1 align="center">Log in to see more</h1>
-        <form action="{% url 'login' %}" method="POST">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <input type="submit" class="form-control btn-info" value="Log in">
-        </form>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
 
-        <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p> 
+                <div class="modal-header">
+                    <img src="{% static 'images/pinterest-logo.png' %}" alt="" height="50" width="50">
+                    <h1>Log in to see more</h1>
+                </div>
 
-        <p>Need an account?</p>
-        <form action="{% url 'register' %}">
-            <input type="submit" class="form-control btn-danger" value="Sign up">
-        </form>
+                <div class="modal-body">
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" class="form-control btn-info" value="Log in">
+                    </form>
+                    <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+
+                    <hr>
+
+                    <p>Not on Pinmersive yet?</p>
+                    <form action="{% url 'register' %}">
+                        <input type="submit" class="form-control btn-danger" value="Sign up">
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+
     </div>
-
-</div>
 {% endblock %}

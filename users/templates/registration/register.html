@@ -1,22 +1,39 @@
-{% extends 'base.html' %}
+{% extends 'registration/base.html' %}
 {% load bootstrap3 %}
+{% load static %}
+
+{% block children_css %}
+    <link rel="stylesheet" href="{% static 'css/users/registration/register.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="register-container">
+    <div class="register-container">
 
-    <div class="container my-custom-container">
-        <h1 align="center">Welcome to Pinmersive</h1>
-        <form action="{% url 'register' %}" method="POST">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <input type="submit" class="form-control btn-danger" value="Continue">
-        </form>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
-        <p>Already a member?</p>
-        <form action="{% url 'login' %}">
-            <input type="submit" class="form-control btn-info" value="Log in">
-        </form>
+                <div class="modal-header text-center">
+                    <img src="{% static 'images/pinterest-logo.png' %}" alt="" height="50" width="50">
+                    <h1>Welcome to Pinmersive</h1>
+                </div>
+
+                <div class="modal-body">
+                    <form action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" class="form-control btn-danger" value="Continue">
+                    </form>
+                    
+                    <hr>
+
+                    <p align="center">Already a member?</p>
+                    <form action="{% url 'login' %}">
+                        <input type="submit" class="form-control btn-info" value="Log in">
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+
     </div>
-
-</div>
 {% endblock %}

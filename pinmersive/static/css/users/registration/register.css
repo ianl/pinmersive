@@ -1,0 +1,8 @@
+body {
+    background: url('/static/images/auth-background.jpg') no-repeat fixed center;
+    padding-bottom: 50px;
+}
+
+.modal-dialog {
+    opacity: 0.95;
+}

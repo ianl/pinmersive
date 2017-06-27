@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            
+            <div class="navbar-collapse collapse" id="navbar-collapsible">
+                <div class="navbar-right">
+                    <a class="btn btn-danger navbar-btn" href="{% url 'register' %}">Sign up</a>
+
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="{% url 'login' %}">Log in</a>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">About Ian Liu</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+{% endblock %}
