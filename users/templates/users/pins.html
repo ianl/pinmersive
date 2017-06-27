@@ -39,10 +39,9 @@
         <div class="pins-container grid">
             {% for pin in pins %}
                 <div class="pin-wrapper grid-item">
-                    <a href="" data-toggle="modal" data-target="#{{ pin.id }}-show">
+                    <a href="{% url 'pins:show' pin.id %}">
                         <img src="/media/{{ pin.image_file }}" alt="">
                     </a>
-                    {% include 'pins/modal_forms/show.html' with pin=pin %}
                 </div>
             {% endfor %}    
         </div>

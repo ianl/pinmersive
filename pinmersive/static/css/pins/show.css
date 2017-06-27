@@ -1,0 +1,34 @@
+#pin-show-body {
+    background-color: #EEEEEE; 
+    padding-top: 0px;
+    cursor: -webkit-zoom-out; cursor: -moz-zoom-out;
+}
+
+#pin-show-body > .modal-forms {
+    cursor: default;
+}
+
+.pin-container > .modal-dialog > .modal-content {
+    cursor: default;
+}
+
+.pin-container > .modal-dialog > .modal-content > .modal-header {
+    z-index: 1039; 
+    background-color: white; 
+    width: 595px; 
+    border-radius: 10px; 
+    border-color: white;
+}
+
+.affix {
+    position: fixed;
+    top: 0;
+}
+
+.affix-bottom {
+    position: absolute;
+}
+
+.pin-close-button {
+    margin: 30px 50px 0px 0px;
+}
