@@ -1,6 +1,8 @@
 $(document).ready(function() {
+    // Categories Dropdown
     $('.dropdown-toggle').dropdown();
 
+    // Pins Isotope
     $('.grid').isotope({
         itemSelector: '.grid-item',
         masonry: {

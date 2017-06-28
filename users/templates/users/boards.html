@@ -1,109 +1,67 @@
 {% extends 'users/base.html' %}
 {% load i18n %}
-{% load template_tags %}
+{% load static %}
+
+{% block children_js %}
+    <script src="{% static 'js/users/boards.js' %}"></script>
+{% endblock %}
+
+{% block children_css %}
+    <link rel="stylesheet" href="{% static 'css/users/boards.css' %}">
+{% endblock %}
 
 {% block user_profile_content %}
-    
-<div class="container my-custom-container">
-    <div class="row text-center">
-        {% blocktrans count counter=public_boards|length %}
-            <p><b>{{ counter }}</b> Board</p>
-        {% plural %}
-            <p><b>{{ counter }}</b> Boards</p>
-        {% endblocktrans %}
-        <hr> 
-    </div>
-
-    {% if user == user_profile.user %}
-        <div class="container my-custom-container">
-            <div class="row">
-
-                <!-- Board Create Modal Trigger Button -->
-                <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#board-create-modal">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a Board
-                </button>
-
-                {% include 'boards/modal_forms/create.html' with form=board_form %}
-
-                <hr>
-                   
-            </div>
+    <div class="container my-custom-container">
+        <div class="row text-center">
+            {% blocktrans count counter=public_boards|length %}
+                <p><b>{{ counter }}</b> Board</p>
+            {% plural %}
+                <p><b>{{ counter }}</b> Boards</p>
+            {% endblocktrans %}
+            <hr> 
         </div>
-    {% endif %} 
-</div>
-        
-<div class="container-fluid">
-    <div class="row">
-        <div class="public-boards-container">
-            {% for board in public_boards %}
-                <div class="board-wrapper">
 
-                    <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
-                        {% for pin in board.pins.all %}
-                            <div class="pin">
-                                <img src="/media/{{ pin.image_file }}" alt="">
-                            </div>
-                        {% endfor %}
-                        
-                        <h2>{{ board.name }}</h2>
+        {% if user == user_profile.user %}
+            <div class="container my-custom-container">
+                <div class="row">
 
-                        {% blocktrans count counter=board.pins.count %}
-                            <p><b>{{ counter }}</b> Pin</p>
-                        {% plural %}
-                            <p><b>{{ counter }}</b> Pins</p>
-                        {% endblocktrans %}
-                    </a>
-                    
-                {% if user != user_profile.user %}
-                    {% if not user.user_profile|is_following_board:board %}
-                        {% include 'boards/forms/follow.html' with username=board.user_profile.user.username board_name=board.name %}
-                    {% else %}
-                        {% include 'boards/forms/unfollow.html' with username=board.user_profile.user.username board_name=board.name %}
-                    {% endif %}
-                {% endif %}
+                    <!-- Board Create Modal Trigger Button -->
+                    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#board-create-modal">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create a Board
+                    </button>
 
+                    {% include 'boards/modal_forms/create.html' with form=board_form %}
+
+                    <hr>
+                       
                 </div>
-            {% endfor %}
-
-        </div>            
+            </div>
+        {% endif %} 
     </div>
-
-    
-    <hr>
-
-    {% if user == user_profile.user %}
+            
+    <div class="container-fluid">
         <div class="row">
-            <div class="secret-boards-container">
+            <div class="public-boards-container">
 
-                <h1><span class="label label-default"><span class="glyphicon glyphicon-lock"></span> Secret Boards</span></h1>
-
-                <p>Only you (and people you invite) can see these boards.</p>
-
-                {% for board in secret_boards %}
-                    <div class="board-wrapper">
-
-                        <a href="{% url 'users:boards:show' user_profile.user.username board.name %}">
-                            {% for pin in board.pins.all %}
-                                <div class="pin">
-                                    <img src="/media/{{ pin.image_file }}" alt="">
-                                </div>
-                            {% endfor %}
-                            
-                            <h2>{{ board.name }}</h2>
-
-                            {% blocktrans count counter=board.pins.count %}
-                                <p><b>{{ counter }}</b> Pin</p>
-                            {% plural %}
-                                <p><b>{{ counter }}</b> Pins</p>
-                            {% endblocktrans %}
-                        </a>
-
-                    </div>
-                {% endfor %}
+                {% include 'boards/partials/boards.html' with boards=public_boards %}
 
             </div>            
         </div>
-    {% endif %}
-</div>
 
+        {% if user == user_profile.user %}
+            <div class="row">
+                <div class="secret-boards-container">
+                    
+                    <div class="secret-boards-header">
+                        <h1><span class="label label-default"><span class="glyphicon glyphicon-lock"></span> Secret Boards</span></h1>
+
+                        <p>Only you (and people you invite) can see these boards.</p>    
+                    </div>
+                    
+                    {% include 'boards/partials/boards.html' with boards=secret_boards %}
+                    
+                </div>            
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

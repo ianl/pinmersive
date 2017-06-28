@@ -1,0 +1,39 @@
+.public-boards-container {
+    padding: 20px 150px 300px 150px;
+}
+
+.secret-boards-container {
+    padding: 20px 150px 300px 150px;
+    background-color: #F7F7F7;
+}
+
+.secret-boards-header {
+    margin: -10px 80px 50px 80px;
+}
+
+.board-wrapper {
+    float: left;
+    width: 301px;
+    height: 254px;
+    margin: 0px 10px 50px 10px;
+}
+
+.board-item-pins-grid-item {
+    width: 65px;
+}
+
+.board-item-pins-grid-item > img {
+    width: 100%;
+    height: auto;
+}
+
+.panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.panel-footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
