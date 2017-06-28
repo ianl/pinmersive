@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block content %}
+    <div class="user-settings-container">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border:none; padding:50px;">
+
+                <form action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="modal-header"><h3>Account Basics</h3></div>
+                    <div class="modal-body">
+                        {% bootstrap_form edit_user_form %}
+
+                        <label class="control-label">Password</label>
+                        <a class="form-control btn btn-primary" href="{% url 'password_change' %}">Change your password...</a>
+                    </div>
+            
+                    <div class="modal-header"><h3>Profile</h3></div>
+                    <div class="modal-body">
+                        {% bootstrap_form edit_user_profile_form %}    
+                    </div>
+                    
+                    <hr>
+
+                    <input type="submit" class="form-control btn-danger" value="Save settings">
+                    <a class="form-control btn btn-default" href="{% url 'users:user' user.username %}">Cancel</a>
+                </form>
+                
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

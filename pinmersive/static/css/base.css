@@ -83,3 +83,8 @@ a:hover, a:focus {
 .is-showing-items .grid-item {
     opacity: 1;
 }
+
+/* UserProfile */
+.user-profile-avatar {
+    border-radius: 50%;
+}

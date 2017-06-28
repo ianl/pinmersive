@@ -8,7 +8,7 @@ from .models import UserProfile
 from pins.models import Pin
 from relationships.models import UserFollowsUser
 
-from .forms import NewUserForm
+from .forms import NewUserForm, EditUserForm, EditUserProfileForm
 from boards.forms import NewBoardForm
 from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm, NewPinFromPinForm, EditPinForm
 
@@ -54,6 +54,34 @@ def pins(request, username):
             'pin_from_web_form': pin_from_web_form, 
             'pin_from_device_form': pin_from_device_form,
             'save_pin_form': save_pin_form
+        }
+    )
+
+@login_required
+def settings(request):
+    if request.method == 'POST':
+        edit_user_form = EditUserForm(request.POST, instance=request.user)
+        edit_user_profile_form = EditUserProfileForm(
+            request.POST, 
+            request.FILES, 
+            instance=request.user.user_profile
+        )
+
+        if edit_user_form.is_valid() and edit_user_profile_form.is_valid():
+            user = edit_user_form.save()
+
+            user_profile = edit_user_profile_form.save(commit=False)
+            user_profile.user = user
+            user_profile.save()
+
+            return redirect(reverse('users:user', kwargs={'username': request.user.username}))
+
+    edit_user_form = EditUserForm(instance=request.user)
+    edit_user_profile_form = EditUserProfileForm(instance=request.user.user_profile)
+
+    return render(request, 'users/settings.html', {
+            'edit_user_form': edit_user_form,
+            'edit_user_profile_form': edit_user_profile_form
         }
     )
 
@@ -107,4 +135,3 @@ def register(request):
             form = NewUserForm()
 
         return render(request, 'registration/register.html', {'form': form})
-    

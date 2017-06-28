@@ -28,13 +28,11 @@
 
                         <a href="{% url 'users:user' follower.user.username %}">
                             <div class="col-md-4">
-                                <div class="user-profile-avatar">
                                 {% if follower.avatar %}
-                                    <img src="{{ follower.avatar.url }}" alt="" height="168" width="168">
+                                    <img class="user-profile-avatar" src="{{ follower.avatar.url }}" alt="" height="168" width="168">
                                 {% else %}
-                                    <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                                    <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
                                 {% endif %}
-                                </div>   
                             </div>
 
                             <div class="col-md-5">

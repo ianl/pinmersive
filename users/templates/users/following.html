@@ -15,15 +15,13 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="user-profile-avatar">
-                        <a href="{% url 'users:user' user_profile.user.username %}">
-                        {% if user_profile.avatar %}
-                            <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
-                        {% else %}
-                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                        {% endif %}
-                        </a>
-                    </div>    
+                    <a href="{% url 'users:user' user_profile.user.username %}">
+                    {% if user_profile.avatar %}
+                        <img class="user-profile-avatar" src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                    {% else %}
+                        <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                    {% endif %}
+                    </a>  
                 </div>
             </div>
         </div>
@@ -36,13 +34,11 @@
                 <div class="users-following-wrapper text-center grid-item">
 
                     <a href="{% url 'users:user' following.user.username %}">
-                        <div class="userProfileAvatar">
-                            {% if following.avatar %}
-                                <img src="{{ following.avatar.url }}" alt="" height="168" width="168">
-                            {% else %}
-                                <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                            {% endif %}
-                        </div>
+                        {% if following.avatar %}
+                            <img class="user-profile-avatar" src="{{ following.avatar.url }}" alt="" height="168" width="168">
+                        {% else %}
+                            <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                        {% endif %}
 
                         <h3>{{ following.user.get_full_name }}</h3>
                     </a>

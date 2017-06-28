@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True, authentication_form=LoginForm), name='login'),
     url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', users_views.register, name='register'),
+    url(r'^settings/$', users_views.settings, name='settings'),
 
     url(r'^search/pins/$', pins_views.search, name='search'),
 

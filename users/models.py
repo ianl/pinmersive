@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from relationships.models import UserFollowsUser, UserFollowsBoard
 
+from .helpers import update_filename
+
 # Create your models here.
 class UserProfile(models.Model):
     description = models.CharField(max_length=255, blank=True)
     location = models.CharField(max_length=255, blank=True)
-    avatar = models.ImageField(upload_to='user_profile_avatars/', blank=True)
+    avatar = models.ImageField(upload_to=update_filename, blank=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
     follows_users = models.ManyToManyField('self', through='relationships.UserFollowsUser', symmetrical=False, blank=True)

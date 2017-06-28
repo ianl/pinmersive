@@ -8,8 +8,8 @@
 <div class="container my-custom-container">
 
         <div class="user-profile-header">
-            {% if user != user_profile.user %}
-                <div class="row">
+            <div class="row">
+                {% if user != user_profile.user %}
                     <div class="col-md-2 pull-right">
                         {% if not user.user_profile|is_following_user_profile:user_profile %}
                             {% include 'users/forms/follow.html' with username=user_profile.user.username %}       
@@ -17,14 +17,19 @@
                             {% include 'users/forms/unfollow.html' with username=user_profile.user.username %}
                         {% endif %}      
                     </div>         
-                </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <a class="btn btn-default btn-lg" href="{% url 'settings' %}" style="border:none;"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                    </div>
+                {% endif %}
+            </div>
 
-                <hr>
-            {% endif %}
+            <hr>
 
             <div class="row">
                 <div class="col-md-4">
                     <h1>{{ user_profile.user.get_full_name }}</h1> 
+                    <p><small>{{ user_profile.description }}</small></p>
                 </div>
 
                 <div class="col-md-5">
@@ -46,13 +51,11 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="user-profile-avatar">
-                        {% if user_profile.avatar %}
-                            <img src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
-                        {% else %}
-                            <img src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
-                        {% endif %}
-                    </div>                     
+                    {% if user_profile.avatar %}
+                        <img class="user-profile-avatar" src="{{ user_profile.avatar.url }}" alt="" height="168" width="168">
+                    {% else %}
+                        <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="" height="168" width="168">
+                    {% endif %}                    
                 </div>
             </div>
 

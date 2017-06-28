@@ -20,9 +20,9 @@
             <div class="panel-footer">
                 <p style="display: inline;"><small>{{ pin.board }}</small></p>
                 {% if pin.board.user_profile.avatar %}
-                    <img src="{{ pin.board.user_profile.avatar.url }}" alt="">
+                    <img class="user-profile-avatar" src="{{ pin.board.user_profile.avatar.url }}" alt="">
                 {% else %}
-                    <img src="{% static 'images/default-avatar.png' %}" alt="">
+                    <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="">
                 {% endif %}   
             </div>
         </a>
