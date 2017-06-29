@@ -1,5 +1,6 @@
 body {
     background: url('/static/images/auth-background.jpg') no-repeat fixed center;
+    padding-top: 20px;
     padding-bottom: 50px;
 }
 

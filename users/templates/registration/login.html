@@ -2,6 +2,10 @@
 {% load bootstrap3 %}
 {% load static %}
 
+{% block children_js %}
+    <script src="{% static 'js/users/registration/login.js' %}"></script>
+{% endblock %}
+
 {% block children_css %}
     <link rel="stylesheet" href="{% static 'css/users/registration/login.css' %}">
 {% endblock %}
@@ -21,9 +25,13 @@
                     <form action="{% url 'login' %}" method="POST">
                         {% csrf_token %}
                         {% bootstrap_form form %}
-                        <input type="submit" class="form-control btn-info" value="Log in">
+                        <input id="log-in" type="submit" class="form-control btn-primary" value="Log in">
                     </form>
                     <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+
+                    <hr>
+
+                    <button id="guest-sign-in"type="button" class="form-control btn btn-info">Sign in as Guest</button>
 
                     <hr>
 

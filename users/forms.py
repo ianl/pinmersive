@@ -72,6 +72,15 @@ class EditUserProfileForm(forms.ModelForm):
 
 # Auths
 class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        max_length=254,
+        label="",
+        widget=forms.TextInput(attrs={'placeholder': 'Username'})
+    )
+    password = forms.CharField(
+        label="", 
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password'})
+    )
 
     def __init__(self, request=None, *args, **kwargs):
         self.request = request
