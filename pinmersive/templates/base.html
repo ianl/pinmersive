@@ -9,14 +9,14 @@
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
 
     <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    {% bootstrap_javascript %}
-    <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'lib/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/js/isotope.pkgd.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
     {% block children_js %}{% endblock %}
     
     <!-- CSS -->
-    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'lib/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block children_css %}{% endblock %}
 </head>
