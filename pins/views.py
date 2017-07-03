@@ -95,7 +95,11 @@ def search(request):
             if pin not in result:
                 result.append(pin)
 
-    save_pin_form = NewPinFromPinForm(user=request.user)
+    if request.user.is_authenticated():
+        save_pin_form = NewPinFromPinForm(user=request.user)
+    else:
+        save_pin_form = NewPinFromPinForm()
+
     return render(request, 'pins/index.html', {
             'pins': result,
             'save_pin_form': save_pin_form

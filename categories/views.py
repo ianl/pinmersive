@@ -10,9 +10,11 @@ from pins.forms import NewPinFromPinForm
 def show(request, name):
     category = get_object_or_404(Category, name=name)
     pins = Pin.objects.filter(board__category=category, board__secret=False)
-    list(set(pins))
 
-    save_pin_form = NewPinFromPinForm(user=request.user)
+    if request.user.is_authenticated():
+        save_pin_form = NewPinFromPinForm(user=request.user)
+    else:
+        save_pin_form = NewPinFromPinForm()
 
     return render(request, 'categories/show.html', {
             'category': category, 

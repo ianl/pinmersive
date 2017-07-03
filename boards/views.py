@@ -27,7 +27,10 @@ def show(request, username, board_name):
     else:
         board_edit_form = EditBoardForm()
 
-    save_pin_form = NewPinFromPinForm(user=request.user)
+    if request.user.is_authenticated():
+        save_pin_form = NewPinFromPinForm(user=request.user)
+    else:
+        save_pin_form = NewPinFromPinForm()
 
     return render(request, 'boards/show.html', {
             'board': board, 

@@ -42,11 +42,15 @@ def boards(request, username):
 def pins(request, username):
     user_profile = get_object_or_404(User, username=username).user_profile
     pins = Pin.objects.filter(board__user_profile=user_profile, board__secret=False)
-    list(set(pins))
 
-    pin_from_web_form = NewPinFromWebForm(user=request.user)
-    pin_from_device_form = NewPinFromDeviceForm(user=request.user)
-    save_pin_form = NewPinFromPinForm(user=request.user)
+    if request.user.is_authenticated():
+        pin_from_web_form = NewPinFromWebForm(user=request.user)
+        pin_from_device_form = NewPinFromDeviceForm(user=request.user)
+        save_pin_form = NewPinFromPinForm(user=request.user)
+    else:
+        pin_from_web_form = NewPinFromWebForm()
+        pin_from_device_form = NewPinFromDeviceForm()
+        save_pin_form = NewPinFromPinForm()
 
     return render(request, 'users/pins.html', {
             'user_profile': user_profile, 
