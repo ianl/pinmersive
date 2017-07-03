@@ -15,29 +15,24 @@ def show(request, username, board_name):
     user = get_object_or_404(User, username=username)
     board = get_object_or_404(user.user_profile.boards, name=board_name.lower())
 
-    if board.secret and user.user_profile != request.user.user_profile:
+    if board.secret and user != request.user:
         get_object_or_404(Board, name=None)
 
-    pin = Pin(board=board)
-    pin_from_web_form = NewPinFromWebForm(instance=pin, user=user)
-    pin_from_device_form = NewPinFromDeviceForm(instance=pin, user=user)
-
-    if user == request.user:
+    if request.user.is_authenticated() and request.user == user:
+        pin = Pin(board=board)
+        pin_from_web_form = NewPinFromWebForm(instance=pin, user=user)
+        pin_from_device_form = NewPinFromDeviceForm(instance=pin, user=user)
         board_edit_form = EditBoardForm(instance=board)
     else:
+        pin_from_web_form = NewPinFromWebForm()
+        pin_from_device_form = NewPinFromDeviceForm()
         board_edit_form = EditBoardForm()
-
-    if request.user.is_authenticated():
-        save_pin_form = NewPinFromPinForm(user=request.user)
-    else:
-        save_pin_form = NewPinFromPinForm()
 
     return render(request, 'boards/show.html', {
             'board': board, 
             'board_edit_form': board_edit_form,
             'pin_from_web_form': pin_from_web_form, 
-            'pin_from_device_form': pin_from_device_form,
-            'save_pin_form': save_pin_form
+            'pin_from_device_form': pin_from_device_form
         }
     )
 
@@ -53,41 +48,56 @@ def create(request, username):
             board.user_profile = request.user.user_profile
             board.save()
             
-            return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name})) 
+            return redirect(reverse('users:boards:show', kwargs={
+                        'username': username, 
+                        'board_name': board.name
+                    }
+                )
+            ) 
 
     return redirect(reverse('users:boards', kwargs={'username': username}))
 
 @login_required
 def update(request, username, board_name):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    board = get_object_or_404(user_profile.boards, name=board_name.lower())
+    user = get_object_or_404(User, username=username)
+    board = get_object_or_404(user.user_profile.boards, name=board_name.lower())
 
-    if user_profile.user == request.user and request.method == 'POST':
+    if user == request.user and request.method == 'POST':
         form = EditBoardForm(request.POST, instance=board)
 
         if form.is_valid():
             form.save()
 
-    return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name}))
+    return redirect(reverse('users:boards:show', kwargs={
+                'username': username, 
+                'board_name': board.name
+            }
+        )
+    )
 
 @login_required
 def destroy(request, username, board_name):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    board = get_object_or_404(user_profile.boards, name=board_name.lower())
+    user = get_object_or_404(User, username=username)
+    board = get_object_or_404(user.user_profile.boards, name=board_name.lower())
 
-    if user_profile.user == request.user and request.method == 'POST':
+    if user == request.user and request.method == 'POST':
         board.delete()
     else:
-        return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board.name}))
+        return redirect(reverse('users:boards:show', kwargs={
+                    'username': username, 
+                    'board_name': board.name
+                }
+            )
+        )
 
     return redirect(reverse('users:boards', kwargs={'username': username}))  
 
 # Relationships
 def followers(request, username, board_name):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    board = get_object_or_404(user_profile.boards, name=board_name.lower())
+    user = get_object_or_404(User, username=username)
+    board = get_object_or_404(user.user_profile.boards, name=board_name.lower())
 
-    if board.secret and user_profile != request.user.user_profile:
+    if board.secret and user != request.user:
         get_object_or_404(Board, name=None)
 
     return render(request, 'boards/followers.html', {'board': board})
@@ -98,15 +108,20 @@ def follow(request, username, board_name):
         if username != request.user.username:
             follower = request.user.user_profile
 
-            user_profile_of_board = get_object_or_404(User, username=username).user_profile
-            following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
+            board_user = get_object_or_404(User, username=username)
+            following = get_object_or_404(board_user.user_profile.boards, name=board_name.lower())
 
             if following.secret:
                 get_object_or_404(Board, name=None)
 
             UserFollowsBoard.objects.create(follower=follower, following=following)
 
-    return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board_name}))
+    return redirect(reverse('users:boards:show', kwargs={
+                'username': username, 
+                'board_name': board_name
+            }
+        )
+    )
 
 @login_required
 def unfollow(request, username, board_name):
@@ -114,8 +129,8 @@ def unfollow(request, username, board_name):
         if username != request.user.username:
             follower = request.user.user_profile
 
-            user_profile_of_board = get_object_or_404(User, username=username).user_profile
-            following = get_object_or_404(user_profile_of_board.boards, name=board_name.lower())
+            board_user = get_object_or_404(User, username=username)
+            following = get_object_or_404(board_user.user_profile.boards, name=board_name.lower())
 
             if following.secret:
                 get_object_or_404(Board, name=None)
@@ -123,4 +138,9 @@ def unfollow(request, username, board_name):
             relationship = get_object_or_404(UserFollowsBoard, follower=follower, following=following)
             relationship.delete()
 
-    return redirect(reverse('users:boards:show', kwargs={'username': username, 'board_name': board_name}))
+    return redirect(reverse('users:boards:show', kwargs={
+                'username': username, 
+                'board_name': board_name
+            }
+        )
+    )

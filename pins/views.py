@@ -37,9 +37,10 @@ def create(request, username):
             return redirect(reverse('pins:show', kwargs={'id': pin.id}))
 
     return redirect(reverse('users:boards:show', kwargs={
-            'username': username, 
-            'board_name': pin.board.name
-        })
+                'username': username, 
+                'board_name': pin.board.name
+            }
+        )
     )
 
 @login_required
@@ -64,7 +65,12 @@ def destroy(request, id):
     else:
         return redirect(reverse('pins:show', kwargs={'id': id}))
 
-    return redirect(reverse('users:boards:show', kwargs={'username': board.user_profile.user.username, 'board_name': board.name})) 
+    return redirect(reverse('users:boards:show', kwargs={
+                'username': board.user_profile.user.username, 
+                'board_name': board.name
+            }
+        )
+    ) 
 
 @login_required
 def save(request, id):
@@ -91,17 +97,13 @@ def search(request):
 
     result = []
     for q in query_list:
-        for pin in pins.filter(Q(description__icontains=q) | Q(board__name__icontains=q) | Q(board__description__icontains=q) | Q(board__category__name__icontains=q)):
+        for pin in pins.filter(
+            Q(description__icontains=q) | 
+            Q(board__name__icontains=q) | 
+            Q(board__description__icontains=q) | 
+            Q(board__category__name__icontains=q)
+        ):
             if pin not in result:
                 result.append(pin)
 
-    if request.user.is_authenticated():
-        save_pin_form = NewPinFromPinForm(user=request.user)
-    else:
-        save_pin_form = NewPinFromPinForm()
-
-    return render(request, 'pins/index.html', {
-            'pins': result,
-            'save_pin_form': save_pin_form
-        }
-    )
+    return render(request, 'pins/index.html', {'pins': result})
