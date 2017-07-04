@@ -18,14 +18,14 @@ class UserProfile(models.Model):
         return self.user.username
 
     def followers(self):
-        relationships = UserFollowsUser.objects.filter(following=self)
+        relationships = UserFollowsUser.objects.select_related().filter(following=self)
         followers = [relationship.follower for relationship in relationships]
         return followers
 
     def is_following_user_profile(self, user_profile):
-        following = UserFollowsUser.objects.filter(follower=self, following=user_profile)
+        following = UserFollowsUser.objects.select_related().filter(follower=self, following=user_profile)
         return True if following.count() > 0 else False
 
     def is_following_board(self, board):
-        following = UserFollowsBoard.objects.filter(follower=self, following=board)
+        following = UserFollowsBoard.objects.select_related().filter(follower=self, following=board)
         return True if following.count() > 0 else False

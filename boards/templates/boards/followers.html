@@ -4,6 +4,8 @@
 {% load template_tags %}
 
 {% block content %}
+
+{% with board_followers=board.followers %}
 <div class="boards-followers-container">
 
     <div class="container my-custom-container">
@@ -11,7 +13,7 @@
             <div class="page-header">
                 <h1>
                     Followers •
-                    {% blocktrans count counter=board.followers|length %}
+                    {% blocktrans count counter=board_followers|length %}
                         {{ counter }} Follower
                     {% plural %}
                         {{ counter }} Followers
@@ -22,7 +24,7 @@
 
         <div class="boards-followers-content">
 
-            {% for follower in board.followers %}
+            {% for follower in board_followers %}
                 <div class="row">
                     <div class="boards-followers-wrapper">
 
@@ -60,4 +62,6 @@
     </div>
 
 </div>
+{% endwith %}
+
 {% endblock %}

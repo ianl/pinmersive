@@ -12,8 +12,8 @@ from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm, NewPinFromPinFor
 
 # Create your views here.
 def show(request, username, board_name):
-    user = get_object_or_404(User, username=username)
-    board = get_object_or_404(user.user_profile.boards, name=board_name.lower())
+    user = get_object_or_404(User.objects.select_related('user_profile').all(), username=username)
+    board = get_object_or_404(user.user_profile.boards.select_related('category').all(), name=board_name.lower())
 
     if board.secret and user != request.user:
         get_object_or_404(Board, name=None)

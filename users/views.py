@@ -15,11 +15,11 @@ from pins.forms import NewPinFromWebForm, NewPinFromDeviceForm, NewPinFromPinFor
 # Create your views here.
 @login_required
 def feed(request):
-    feed = Pin.objects.filter(board__secret=False).distinct()
+    feed = Pin.objects.select_related().filter(board__secret=False).distinct().prefetch_related('board__category')
     return render(request, 'pins/index.html', {'pins': feed})
 
 def boards(request, username):
-    user_profile = get_object_or_404(User, username=username).user_profile
+    user_profile = get_object_or_404(User.objects.select_related('user_profile').all(), username=username).user_profile
     board_form = NewBoardForm()
 
     public_boards = user_profile.boards.filter(secret=False)
@@ -34,8 +34,8 @@ def boards(request, username):
     )
 
 def pins(request, username):
-    user_profile = get_object_or_404(User, username=username).user_profile
-    pins = Pin.objects.filter(board__user_profile=user_profile, board__secret=False)
+    user_profile = get_object_or_404(User.objects.select_related('user_profile').all(), username=username).user_profile
+    pins = Pin.objects.select_related().filter(board__user_profile=user_profile, board__secret=False).prefetch_related('board__category')
 
     if user_profile.user == request.user:
         pin_from_web_form = NewPinFromWebForm(user=request.user)
@@ -87,7 +87,7 @@ def following(request, username):
     return render(request, 'users/following.html', {'user_profile': user_profile})
 
 def followers(request, username):
-    user_profile = get_object_or_404(User, username=username).user_profile
+    user_profile = get_object_or_404(User.objects.select_related('user_profile').all(), username=username).user_profile
 
     return render(request, 'users/followers.html', {'user_profile': user_profile})
 

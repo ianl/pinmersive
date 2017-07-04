@@ -4,13 +4,15 @@
 {% load template_tags %}
 
 {% block content %}
+
+{% with followings=user_profile.follows_users.select_related.all %}
 <div class="users-following-container">
 
     <div class="container my-custom-container">
         <div class="users-following-header">
             <div class="row">
                 <div class="col-md-9">
-                    <h1>{{ user_profile.follows_users.count }}</h1>
+                    <h1>{{ followings.count }}</h1>
                     <p>Following</p>   
                 </div>
 
@@ -29,7 +31,7 @@
         <hr>
 
         <div class="users-following-content grid">
-            {% for following in user_profile.follows_users.all %}
+            {% for following in followings %}
 
                 <div class="users-following-wrapper text-center grid-item">
 
@@ -58,4 +60,6 @@
     </div>
 
 </div>
+{% endwith %}
+
 {% endblock %}

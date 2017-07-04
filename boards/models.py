@@ -23,7 +23,7 @@ class Board(models.Model):
             return str(self.name) + " | " + str(self.user_profile.user.username)
 
     def followers(self):
-        relationships = UserFollowsBoard.objects.filter(following=self)
+        relationships = UserFollowsBoard.objects.select_related().filter(following=self)
         followers = [relationship.follower for relationship in relationships]
         
         return followers

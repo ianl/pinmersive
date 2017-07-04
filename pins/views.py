@@ -12,7 +12,7 @@ from .forms import NewPinForm, EditPinForm, NewPinFromPinForm
 # Create your views here.
 @login_required
 def show(request, id):
-    pin = get_object_or_404(Pin, id=id)
+    pin = get_object_or_404(Pin.objects.select_related().all(), id=id)
 
     if pin.board.secret and pin.board.user_profile.user != request.user:
         get_object_or_404(Pin, id=None)

@@ -4,13 +4,15 @@
 {% load template_tags %}
 
 {% block content %}
+
+{% with user_profile_followers=user_profile.followers %}
 <div class="users-followers-container">
 
     <div class="container my-custom-container">
         <div class="users-followers-header">
             <div class="row">
                 <div class="col-md-9">
-                    {% blocktrans count counter=user_profile.followers|length %}
+                    {% blocktrans count counter=user_profile_followers|length %}
                         <h1>{{ counter }}</h1>
                         <p>Follower</p>
                     {% plural %}
@@ -35,7 +37,7 @@
 
         <div class="users-followers-content grid">
 
-            {% for follower in user_profile.followers %}
+            {% for follower in user_profile_followers %}
                 <div class="users-follower-wrapper text-center grid-item">
 
                     <a href="{% url 'users:user' follower.user.username %}">
@@ -63,4 +65,6 @@
     </div>
 
 </div>
+{% endwith %}
+
 {% endblock %}
