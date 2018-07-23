@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"django-bootstrap3" = "==8.2.3"
+django-debug-toolbar = "==1.8"
+olefile = "==0.44"
+pytz = "==2017.2"
+sqlparse = "==0.2.3"
+Django = "==1.11.2"
+Pillow = "==4.1.1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
