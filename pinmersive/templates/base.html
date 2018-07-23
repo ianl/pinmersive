@@ -1,101 +1,113 @@
-{% load static %}
-{% load bootstrap3 %}
-{% load template_tags %}
+{% load static %} {% load bootstrap3 %} {% load template_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Pinmersive</title>
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
 
     <!-- JS -->
     <script src="{% static 'lib/js/jquery-3.2.1.min.js' %}"></script>
     <script src="{% static 'lib/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'lib/js/isotope.pkgd.min.js' %}"></script>
-    <script src="{% static 'js/base.js' %}"></script>
-    {% block children_js %}{% endblock %}
-    
+    <script src="{% static 'js/base.js' %}"></script> {% block children_js %}{% endblock %}
+
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'lib/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    {% block children_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"> {% block children_css %}{% endblock %}
 </head>
+
 <body>
     {% block navbar %}
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
 
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{% url 'home' %}">
-                        <img src="{% static 'images/pinterest-logo.png' %}" alt="" height="50" width="50">
-                    </a>                   
-                </div>
-                
-                <div class="navbar-collapse collapse" id="navbar-collapsible">
-                    {% if user.is_authenticated %}
-                        <div class="navbar-right">
-
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span>
-                                    Categories
-                                </button>
-                                <ul class="dropdown-menu">
-                                    {% get_categories as categories %}
-                                    {% for category in categories %}
-                                        <li>
-                                            <a href="{% url 'categories:category' category.name %}">{{ category.name }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-
-                            <div class="btn-group">
-                                <a class="btn btn-danger" href="{% url 'users:user' user.username %}"><span class="glyphicon glyphicon-user"></span> Saved</a>
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{% url 'logout' %}">Log out</a></li>
-
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">About Ian Liu</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-
-                        <form class="navbar-form" action="{% url 'search' %}" method="GET">
-                            <div class="form-group" style="display:inline;">
-                                <div class="input-group" style="display:table;">
-                                    <span class="input-group-addon" style="width:1%;"><span class="glyphicon glyphicon-search"></span></span>
-                                    <input type="text" class="form-control" placeholder="Search" name="q">   
-                                </div>
-                            </div>
-                        </form>
-                    {% else %}
-                        <div class="navbar-right">
-                            <a class="btn btn-danger navbar-btn" href="{% url 'register' %}">Sign up</a>
-
-                            <div class="btn-group">
-                                <a class="btn btn-default" href="{% url 'login' %}">Log in</a>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="caret"></span>
-                                    <span class="sr-only"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">About Ian Liu</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'images/pinterest-logo.png' %}" alt="" height="50" width="50">
+                </a>
             </div>
-        </nav>
-    {% endblock %}
-    
-    {% block content %}
-    {% endblock %}
+
+            <div class="navbar-collapse collapse" id="navbar-collapsible">
+                {% if user.is_authenticated %}
+                <div class="navbar-right">
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            Categories
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% get_categories as categories %} {% for category in categories %}
+                            <li>
+                                <a href="{% url 'categories:category' category.name %}">{{ category.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="btn-group">
+                        <a class="btn btn-danger" href="{% url 'users:user' user.username %}">
+                            <span class="glyphicon glyphicon-user"></span> Saved</a>
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'logout' %}">Log Out</a>
+                            </li>
+
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">About Pinmersive</li>
+                            <li>
+                                <a href="https://github.com/ianthl/pinmersive" target="_blank">GitHub repository</a>
+                            </li>
+                            <li class="dropdown-header">Made by
+                                <em>ianthl</em>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/in/ianthl/" target="_blank">Find me on LinkedIn!</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <form class="navbar-form" action="{% url 'search' %}" method="GET">
+                    <div class="form-group" style="display:inline;">
+                        <div class="input-group" style="display:table;">
+                            <span class="input-group-addon" style="width:1%;">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Search" name="q">
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="navbar-right">
+                    <a class="btn btn-danger navbar-btn" href="{% url 'register' %}">Sign up</a>
+
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="{% url 'login' %}">Log in</a>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">About Ian Liu</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </nav>
+    {% endblock %} {% block content %} {% endblock %}
 </body>
+
 </html>
