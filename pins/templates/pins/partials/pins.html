@@ -1,30 +1,36 @@
-{% load static %}
+{% load static %} {% for pin in pins %}
+<div class="pin-wrapper grid-item panel panel-default">
 
-{% for pin in pins %}
-    <div class="pin-wrapper grid-item panel panel-default">
-        
-        <a href="{% url 'pins:show' pin.id %}">
-            <img src="/media/{{ pin.image_file }}" alt="">
+    <a href="{% url 'pins:show' pin.id %}">
+        <img src="{{ MEDIA_URL }}{{ pin.image_file.url }}" alt="">
 
-            <div class="panel-body">
-                <h5>{{ pin.description }}</h5>
-                {% if pin.board.category %}
-                    <p><small>From <b>{{ pin.board.category.name }}</b></small></p>
-                {% else %}
-                    <p><small>From <b>Everything</b></small></p>
-                {% endif %}
-            </div>
-        </a>
+        <div class="panel-body">
+            <h5>{{ pin.description }}</h5>
+            {% if pin.board.category %}
+            <p>
+                <small>From
+                    <b>{{ pin.board.category.name }}</b>
+                </small>
+            </p>
+            {% else %}
+            <p>
+                <small>From
+                    <b>Everything</b>
+                </small>
+            </p>
+            {% endif %}
+        </div>
+    </a>
 
-        <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}">
-            <div class="panel-footer">
-                <p style="display: inline;"><small>{{ pin.board }}</small></p>
-                {% if pin.board.user_profile.avatar %}
-                    <img class="user-profile-avatar" src="{{ pin.board.user_profile.avatar.url }}" alt="">
-                {% else %}
-                    <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt="">
-                {% endif %}   
-            </div>
-        </a>
-    </div>
+    <a href="{% url 'users:boards:show' pin.board.user_profile.user.username pin.board.name %}">
+        <div class="panel-footer">
+            <p style="display: inline;">
+                <small>{{ pin.board }}</small>
+            </p>
+            {% if pin.board.user_profile.avatar %}
+            <img class="user-profile-avatar" src="{{ pin.board.user_profile.avatar.url }}" alt=""> {% else %}
+            <img class="user-profile-avatar" src="{% static 'images/default-avatar.png' %}" alt=""> {% endif %}
+        </div>
+    </a>
+</div>
 {% endfor %}
