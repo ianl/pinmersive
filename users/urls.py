@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^follow$', views.follow, name='follow'),
     url(r'^unfollow$', views.unfollow, name='unfollow'),
 
-    url(r'^(?P<board_name>[\w\-]+)/', include('boards.urls', namespace='boards')),
+    url(r'^(?P<board_name>[\w\- ]+)/', include('boards.urls', namespace='boards')),
 
     url(r'^$', views.boards, name='user'),
 ]

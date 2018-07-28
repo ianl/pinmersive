@@ -10,7 +10,7 @@
                     {% for pin in board.pins.all|slice:":10" %}
                         {% if pin %}
                             <div class="board-item-pins-grid-item">
-                                <img src="/media/{{ pin.image_file }}" alt="">
+                                <img src="{{ MEDIA_URL }}{{ pin.image_file.url }}" alt="">
                             </div> 
                         {% endif %} 
                     {% endfor %} 
