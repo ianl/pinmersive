@@ -33,7 +33,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
 
 # Application definition
@@ -201,3 +201,10 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'static')
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'media')
 
 DEFAULT_FILE_STORAGE = 'pinmersive.storage_backends.MediaStorage'
+
+
+# Connect to Heroku's PostgreSQL via 'DATABASE_URL' environment variable 
+import dj_database_url
+DATABASES['default'] = dj_database_url.config(
+    default='postgresql://Ian@localhost:5432/pinmersive', 
+    conn_max_age=600)

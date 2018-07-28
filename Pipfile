@@ -17,6 +17,7 @@ collectfast = "*"
 django-environ = "*"
 "psycopg2" = "*"
 gunicorn = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
