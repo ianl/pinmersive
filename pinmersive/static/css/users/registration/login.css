@@ -1,9 +1,9 @@
 body {
-    background: url('/static/images/auth-background.jpg') no-repeat fixed center;
-    padding-top: 20px;
-    padding-bottom: 50px;
+  background: url('/static/images/auth-background.jpg') no-repeat fixed center;
+  padding-top: 20px;
+  padding-bottom: 50px;
 }
 
 .modal-dialog {
-    opacity: 0.93;
+  opacity: 0.93;
 }

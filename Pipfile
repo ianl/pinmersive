@@ -11,6 +11,9 @@ pytz = "==2017.2"
 sqlparse = "==0.2.3"
 Django = "==1.11.2"
 Pillow = "==4.1.1"
+"boto3" = "*"
+django-storages = "*"
+collectfast = "*"
 
 [dev-packages]
 

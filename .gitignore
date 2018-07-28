@@ -105,3 +105,4 @@ venv.bak/
 
 # Others
 /sample_pin_images
+/pinmersive/prod_settings.py
