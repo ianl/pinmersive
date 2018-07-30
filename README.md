@@ -35,7 +35,7 @@ python manage.py runserver
 Pinmersive uses:
 
 - [Django](https://github.com/django/django)
-- SQLite
+- SQLite (development) / PostgreSQL (production)
 - [Bootstrap 3](https://github.com/twbs/bootstrap)
 - [jQuery](https://github.com/jquery/jquery)
 - [Isotope](https://github.com/metafizzy/isotope)
