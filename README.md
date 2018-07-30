@@ -2,6 +2,8 @@
 
 ### A simplified Pinterest clone
 
+#### See it live [HERE](https://pinmersive.herokuapp.com)
+
 ## Installation
 
 1.  Install dependencies:
